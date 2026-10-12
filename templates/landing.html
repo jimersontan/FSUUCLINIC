@@ -8,10 +8,12 @@
         cursor: pointer;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
     .doctor-card-clickable:hover {
         transform: translateY(-2px);
         box-shadow: 0 18px 35px rgba(15, 23, 42, 0.08);
     }
+
     .modal-backdrop.show {
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
@@ -21,14 +23,17 @@
     <div class="row align-items-center g-4">
         <div class="col-lg-7">
             <div class="pe-lg-5">
-                <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 rounded-pill mb-3">Trusted by patients and clinics</span>
+                <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 rounded-pill mb-3">Trusted by
+                    patients and clinics</span>
                 <h1 class="section-title mb-3">Healthcare Made Simple. Book Your Doctor's Visit Online.</h1>
-                <p class="lead muted-text mb-4">Fast, seamless, and hassle-free appointment scheduling with top specialists. Find a doctor, choose a time, and get confirmed in minutes.</p>
+                <p class="lead muted-text mb-4">Fast, seamless, and hassle-free appointment scheduling with top
+                    specialists. Find a doctor, choose a time, and get confirmed in minutes.</p>
                 <div class="d-flex flex-wrap gap-3 mb-4">
                     {% if user.is_authenticated and user.role == 'PATIENT' %}
-                        <a href="{% url 'patient_dashboard' %}" class="btn btn-primary btn-lg px-4">Book an Appointment</a>
+                    <a href="{% url 'patient_dashboard' %}" class="btn btn-primary btn-lg px-4">Book an Appointment</a>
                     {% else %}
-                        <button type="button" class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#authModal">Book an Appointment</button>
+                    <button type="button" class="btn btn-primary btn-lg px-4" data-bs-toggle="modal"
+                        data-bs-target="#authModal">Book an Appointment</button>
                     {% endif %}
                     <a href="#doctors" class="btn btn-outline-primary btn-lg px-4">Find a Doctor</a>
                 </div>
@@ -37,7 +42,8 @@
                     <form method="get" action="{% url 'patient_dashboard' %}" class="row g-2 align-items-end">
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Doctor or specialty</label>
-                            <input type="text" class="form-control" name="doctor_name" placeholder="Search doctor name or specialty" value="{{ request.GET.doctor_name }}">
+                            <input type="text" class="form-control" name="doctor_name"
+                                placeholder="Search doctor name or specialty" value="{{ request.GET.doctor_name }}">
                         </div>
                         <div class="col-md-3">
                             <label class="form-label fw-semibold">Select date</label>
@@ -62,20 +68,22 @@
                 </div>
                 <div class="list-group list-group-flush">
                     {% for doctor in doctors %}
-                        <div class="list-group-item px-0 py-3 border-0 border-bottom">
-                            <div class="d-flex align-items-center justify-content-between gap-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-weight: 700;">{{ doctor.name|slice:':1' }}</div>
-                                    <div>
-                                        <div class="fw-bold">{{ doctor.name }}</div>
-                                        <small class="text-muted">{{ doctor.specialty }}</small>
-                                    </div>
+                    <div class="list-group-item px-0 py-3 border-0 border-bottom">
+                        <div class="d-flex align-items-center justify-content-between gap-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center"
+                                    style="width: 50px; height: 50px; font-weight: 700;">{{ doctor.name|slice:':1' }}
                                 </div>
-                                <span class="badge bg-light text-success">Available Today</span>
+                                <div>
+                                    <div class="fw-bold">{{ doctor.name }}</div>
+                                    <small class="text-muted">{{ doctor.specialty }}</small>
+                                </div>
                             </div>
+                            <span class="badge bg-light text-success">Available Today</span>
                         </div>
+                    </div>
                     {% empty %}
-                        <div class="text-muted py-3">No doctors available yet.</div>
+                    <div class="text-muted py-3">No doctors available yet.</div>
                     {% endfor %}
                 </div>
             </div>
@@ -86,14 +94,16 @@
 <section class="py-5">
     <div class="text-center mb-5">
         <h2 class="section-title mb-3">Why choose FSUU Clinic?</h2>
-        <p class="lead muted-text mx-auto" style="max-width:620px;">Built to make healthcare access easier for both patients and clinical teams.</p>
+        <p class="lead muted-text mx-auto" style="max-width:620px;">Built to make healthcare access easier for both
+            patients and clinical teams.</p>
     </div>
     <div class="row g-4">
         <div class="col-md-6 col-xl-3">
             <div class="card h-100 p-4">
                 <div class="display-6 mb-3">📅</div>
                 <h5>Easy Online Booking</h5>
-                <p class="text-muted mb-0">Choose your doctor, select an available time slot, and confirm in a few taps.</p>
+                <p class="text-muted mb-0">Choose your doctor, select an available time slot, and confirm in a few taps.
+                </p>
             </div>
         </div>
         <div class="col-md-6 col-xl-3">
@@ -107,14 +117,16 @@
             <div class="card h-100 p-4">
                 <div class="display-6 mb-3">✅</div>
                 <h5>Verified Specialists</h5>
-                <p class="text-muted mb-0">Access doctors across key disciplines with a clear, patient-first experience.</p>
+                <p class="text-muted mb-0">Access doctors across key disciplines with a clear, patient-first experience.
+                </p>
             </div>
         </div>
         <div class="col-md-6 col-xl-3">
             <div class="card h-100 p-4">
                 <div class="display-6 mb-3">🩺</div>
                 <h5>Patient Management</h5>
-                <p class="text-muted mb-0">Track appointments, reschedule, and review your booking history in one place.</p>
+                <p class="text-muted mb-0">Track appointments, reschedule, and review your booking history in one place.
+                </p>
             </div>
         </div>
     </div>
@@ -130,29 +142,37 @@
     </div>
     <div class="row g-4">
         {% for doctor in doctors %}
-            <div class="col-md-6 col-xl-3">
-                <div class="card h-100 p-3 doctor-card-clickable" data-doctor-id="{{ doctor.id }}" data-doctor-name="{{ doctor.name }}" data-doctor-specialty="{{ doctor.specialty }}" data-doctor-sex="{{ doctor.get_sex_display }}" data-doctor-bio="{{ doctor.bio|default:'Experienced physician committed to excellent patient care.'|escapejs }}" data-doctor-photo="{% if doctor.photo %}{{ doctor.photo.url }}{% endif %}">
-                    {% if doctor.photo %}
-                        <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" class="rounded-circle mx-auto mb-3 border" style="width: 70px; height: 70px; object-fit: cover;">
-                    {% else %}
-                        <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center text-primary fw-bold mx-auto mb-3" style="width: 70px; height: 70px; font-size: 1.3rem;">{{ doctor.name|slice:':1' }}</div>
-                    {% endif %}
-                    <div class="text-center">
-                        <h5 class="mb-1">{{ doctor.name }}</h5>
-                        <p class="text-primary fw-semibold mb-2">{{ doctor.specialty }}</p>
-                        <p class="text-muted small mb-3">{{ doctor.bio|default:'Experienced physician committed to excellent patient care.' }}</p>
-                        <div class="d-flex justify-content-center gap-2 mb-3">
-                            <span class="badge bg-success-subtle text-success">Available Today</span>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-outline-primary flex-fill" data-view-doctor="{{ doctor.id }}">View Details</button>
-                            <a href="{% url 'patient_dashboard' %}?doctor_id={{ doctor.id }}" class="btn btn-primary flex-fill">Book</a>
-                        </div>
+        <div class="col-md-6 col-xl-3">
+            <div class="card h-100 p-3 doctor-card-clickable" data-doctor-id="{{ doctor.id }}"
+                data-doctor-name="{{ doctor.name }}" data-doctor-specialty="{{ doctor.specialty }}"
+                data-doctor-sex="{{ doctor.get_sex_display }}"
+                data-doctor-bio="{{ doctor.bio|default:'Experienced physician committed to excellent patient care.'|escapejs }}"
+                data-doctor-photo="{% if doctor.photo %}{{ doctor.photo.url }}{% endif %}">
+                {% if doctor.photo %}
+                <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" class="rounded-circle mx-auto mb-3 border"
+                    style="width: 70px; height: 70px; object-fit: cover;">
+                {% else %}
+                <div class="rounded-circle bg-primary-subtle d-flex align-items-center justify-content-center text-primary fw-bold mx-auto mb-3"
+                    style="width: 70px; height: 70px; font-size: 1.3rem;">{{ doctor.name|slice:':1' }}</div>
+                {% endif %}
+                <div class="text-center">
+                    <h5 class="mb-1">{{ doctor.name }}</h5>
+                    <p class="text-primary fw-semibold mb-2">{{ doctor.specialty }}</p>
+                    <p class="text-muted small mb-3">{{ doctor.bio|default:'Experienced physician committed to excellent patient care.' }}</p>
+                    <div class="d-flex justify-content-center gap-2 mb-3">
+                        <span class="badge bg-success-subtle text-success">Available Today</span>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-primary flex-fill"
+                            data-view-doctor="{{ doctor.id }}">View Details</button>
+                        <a href="{% url 'patient_dashboard' %}?doctor_id={{ doctor.id }}"
+                            class="btn btn-primary flex-fill">Book</a>
                     </div>
                 </div>
             </div>
+        </div>
         {% empty %}
-            <div class="col-12 text-center text-muted py-4">No doctors registered yet.</div>
+        <div class="col-12 text-center text-muted py-4">No doctors registered yet.</div>
         {% endfor %}
     </div>
 </section>
@@ -165,21 +185,24 @@
     <div class="row g-4">
         <div class="col-md-4">
             <div class="card p-4 h-100 text-center">
-                <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-bold mb-3" style="width: 52px; height: 52px;">1</div>
+                <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-bold mb-3"
+                    style="width: 52px; height: 52px;">1</div>
                 <h5>Find Your Doctor</h5>
                 <p class="text-muted mb-0">Search by specialty, name, or department to discover the right clinician.</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card p-4 h-100 text-center">
-                <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-bold mb-3" style="width: 52px; height: 52px;">2</div>
+                <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-bold mb-3"
+                    style="width: 52px; height: 52px;">2</div>
                 <h5>Pick a Time Slot</h5>
                 <p class="text-muted mb-0">Review live availability and choose the best appointment time for you.</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card p-4 h-100 text-center">
-                <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-bold mb-3" style="width: 52px; height: 52px;">3</div>
+                <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-bold mb-3"
+                    style="width: 52px; height: 52px;">3</div>
                 <h5>Get Confirmed</h5>
                 <p class="text-muted mb-0">Receive instant confirmation and helpful reminders before your visit.</p>
             </div>
@@ -192,7 +215,9 @@
         <div class="row align-items-center g-4">
             <div class="col-lg-6">
                 <h2 class="section-title mb-3">Modern care. Personalized support.</h2>
-                <p class="text-muted">FSUU Clinic helps patients connect with trusted doctors and manage visits without waiting on hold or juggling phone calls. From first search to final confirmation, the process is clear, secure, and easy to navigate.</p>
+                <p class="text-muted">FSUU Clinic helps patients connect with trusted doctors and manage visits without
+                    waiting on hold or juggling phone calls. From first search to final confirmation, the process is
+                    clear, secure, and easy to navigate.</p>
             </div>
             <div class="col-lg-6 text-center">
                 <div class="bg-primary-subtle py-5 rounded-4">
@@ -213,7 +238,8 @@
             </div>
             <div class="modal-body p-4 pt-2">
                 <div class="d-flex align-items-center gap-3 pb-3 border-bottom mb-4">
-                    <div class="rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center fw-bold" id="detailAvatar" style="width: 64px; height: 64px; font-size: 1.4rem;">D</div>
+                    <div class="rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center fw-bold"
+                        id="detailAvatar" style="width: 64px; height: 64px; font-size: 1.4rem;">D</div>
                     <div>
                         <div class="fw-bold fs-4" id="detailName">Doctor Name</div>
                         <div class="d-flex flex-wrap align-items-center gap-2 mt-1">
@@ -224,7 +250,8 @@
                 </div>
                 <p class="text-muted mb-3" id="detailBio">Doctor biography.</p>
                 <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap">
-                    <div class="text-muted small">Consultation hours vary by the day. Book online for the next available slot.</div>
+                    <div class="text-muted small">Consultation hours vary by the day. Book online for the next available
+                        slot.</div>
                     <a href="{% url 'patient_dashboard' %}" class="btn btn-primary">Book appointment</a>
                 </div>
             </div>
@@ -271,14 +298,19 @@
                         <form method="post" action="{% url 'login' %}">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="login_modal_username" class="form-label fw-semibold">Username or email</label>
-                                <input type="text" class="form-control" id="login_modal_username" name="username" required>
+                                <label for="login_modal_username" class="form-label fw-semibold">Username or
+                                    email</label>
+                                <input type="text" class="form-control" id="login_modal_username" name="username"
+                                    required>
                             </div>
                             <div class="mb-3">
                                 <label for="login_modal_password" class="form-label fw-semibold">Password</label>
                                 <div class="modal-password-wrap">
-                                    <input type="password" class="form-control" id="login_modal_password" name="password" required>
-                                    <button type="button" class="password-toggle modal-password-toggle" data-password-target="login_modal_password" aria-label="Show password" title="Show password"><i class="bi bi-eye"></i></button>
+                                    <input type="password" class="form-control" id="login_modal_password"
+                                        name="password" required>
+                                    <button type="button" class="password-toggle modal-password-toggle"
+                                        data-password-target="login_modal_password" aria-label="Show password"
+                                        title="Show password"><i class="bi bi-eye"></i></button>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Sign in</button>
@@ -297,19 +329,25 @@
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label for="register_modal_username" class="form-label fw-semibold">Username</label>
-                                    <input type="text" class="form-control" id="register_modal_username" name="username" required>
+                                    <input type="text" class="form-control" id="register_modal_username" name="username"
+                                        required>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="register_modal_email" class="form-label fw-semibold">Email</label>
-                                    <input type="email" class="form-control" id="register_modal_email" name="email" required>
+                                    <input type="email" class="form-control" id="register_modal_email" name="email"
+                                        required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="register_modal_password1" class="form-label fw-semibold">Password</label>
-                                    <input type="password" class="form-control" id="register_modal_password1" name="password1" required>
+                                    <label for="register_modal_password1"
+                                        class="form-label fw-semibold">Password</label>
+                                    <input type="password" class="form-control" id="register_modal_password1"
+                                        name="password1" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="register_modal_password2" class="form-label fw-semibold">Confirm password</label>
-                                    <input type="password" class="form-control" id="register_modal_password2" name="password2" required>
+                                    <label for="register_modal_password2" class="form-label fw-semibold">Confirm
+                                        password</label>
+                                    <input type="password" class="form-control" id="register_modal_password2"
+                                        name="password2" required>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary w-100 mt-3">Create account</button>
@@ -318,7 +356,8 @@
                 </div>
 
                 <div class="text-center small text-muted mt-2">
-                    <span id="toggleAuthText">Don't have an account? <a href="#" class="text-primary fw-semibold text-decoration-none" id="toggleAuthLink">Sign up</a></span>
+                    <span id="toggleAuthText">Don't have an account? <a href="#"
+                            class="text-primary fw-semibold text-decoration-none" id="toggleAuthLink">Sign up</a></span>
                 </div>
             </div>
         </div>

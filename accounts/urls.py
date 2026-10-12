@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import (
+    delete_or_unsend_message,
     home_view,
     landing_page,
     login_view,
@@ -20,6 +21,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('messages/', messages_page, name='messages_page'),
     path('messages/send/', send_message, name='send_message'),
+    path('messages/<int:message_id>/delete/', delete_or_unsend_message, name='delete_message'),
     path('messages/notifications/', notification_payload, name='notification_payload'),
     path('profile/view/<int:user_id>/', user_profile_detail, name='user_profile'),
     path('admin/patient/<int:user_id>/', user_profile_detail, name='admin_patient_profile'),

@@ -30,6 +30,9 @@ class Message(models.Model):
     body = models.TextField()
     appointment = models.ForeignKey('admin_dashboard.Appointment', null=True, blank=True, related_name='messages', on_delete=models.SET_NULL)
     is_read = models.BooleanField(default=False)
+    is_unsent = models.BooleanField(default=False)
+    deleted_by_sender = models.BooleanField(default=False)
+    deleted_by_recipient = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

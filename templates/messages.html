@@ -542,16 +542,37 @@
                         <div class="chat-thread">
                             {% for message in thread %}
                                 <div class="message-row {% if message.sender == request.user %}sent{% else %}received{% endif %}">
-                                    <div class="message-bubble">
-                                        {% if message.subject %}<span class="message-subject">{{ message.subject }}</span>{% endif %}
-                                        {{ message.body }}
-                                    </div>
-                                    <div class="message-meta">
-                                        <span>{{ message.created_at|date:'h:i A' }}</span>
-                                        {% if message.sender == request.user %}
-                                            <i class="bi bi-check2-all"></i>
-                                        {% endif %}
-                                    </div>
+{% comment %}
+Add action buttons for each message based on permissions.
+{% endcomment %}
+{% if not message.is_unsent %}
+    <div class="message-bubble">
+        {% if message.subject %}<span class="message-subject">{{ message.subject }}</span>{% endif %}
+        {{ message.body }}
+    </div>
+    <div class="message-meta">
+        <span>{{ message.created_at|date:'h:i A' }}</span>
+        {% if message.sender == request.user %}
+            <i class="bi bi-check2-all"></i>
+        {% endif %}
+        <!-- Action Buttons -->
+        <form method="post" action="{% url 'delete_message' message.id %}" style="display:inline; margin-left:0.5rem;">
+            {% csrf_token %}
+            {% if message.sender == request.user or request.user.role == 'ADMIN' or request.user.role == 'STAFF' %}
+                <button type="submit" name="action" value="unsend" class="btn btn-sm btn-outline-danger" title="Unsend for everyone">Unsend</button>
+            {% endif %}
+            <button type="submit" name="action" value="delete_for_me" class="btn btn-sm btn-outline-secondary" title="Delete for me">Delete</button>
+        </form>
+    </div>
+{% else %}
+    <div class="message-bubble" style="font-style: italic; color: #6b7280;">
+        {% if message.sender == request.user %}
+            You unsent a message
+        {% else %}
+            {{ message.sender.get_full_name|default:message.sender.username }} unsent a message
+        {% endif %}
+    </div>
+{% endif %}
                                 </div>
                             {% empty %}
                                 <div class="text-muted text-center mt-5">Start the conversation with a message.</div>

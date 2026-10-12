@@ -851,6 +851,172 @@
     .schedule-day-pill input:focus-visible + span { outline: 3px solid rgba(13, 110, 253, 0.28); outline-offset: 2px; }
     .btn-blocked-slot { color: #fff; background: #b45309; border-color: #b45309; }
     .btn-blocked-slot:hover { color: #fff; background: #92400e; border-color: #92400e; }
+
+    /* ============================================================
+       DOCTORS DIRECTORY & ADD DOCTOR MODAL - UNIQUE PREMIUM DESIGN
+       ============================================================ */
+    .doctor-module-header-card {
+        background: var(--dashboard-panel);
+        border: 1px solid var(--dashboard-border);
+        border-radius: 20px;
+        padding: 1.35rem 1.6rem;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+        position: relative;
+        overflow: hidden;
+    }
+    .doctor-module-header-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 100%;
+        background: linear-gradient(180deg, #2563eb 0%, #38bdf8 100%);
+    }
+    .doctor-module-badge-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        color: #ffffff;
+        display: grid;
+        place-items: center;
+        font-size: 1.5rem;
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.28);
+        flex-shrink: 0;
+    }
+    .doctor-module-title {
+        color: var(--dashboard-heading);
+        letter-spacing: -0.02em;
+        font-size: 1.35rem;
+    }
+    .doctor-module-description {
+        font-size: 0.88rem;
+        line-height: 1.55;
+        max-width: 860px;
+        color: var(--dashboard-muted);
+    }
+    .btn-add-doctor-trigger {
+        border-radius: 12px;
+        padding: 0.65rem 1.3rem;
+        font-weight: 700;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        border: none;
+        color: #ffffff;
+        box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .btn-add-doctor-trigger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 22px rgba(37, 99, 235, 0.4);
+        background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+        color: #ffffff;
+    }
+    .add-doctor-modal-content {
+        background: var(--dashboard-panel);
+        color: var(--dashboard-text);
+        border-radius: 24px;
+        overflow: hidden;
+        border: 1px solid var(--dashboard-border);
+        box-shadow: 0 30px 80px rgba(15, 23, 42, 0.25);
+    }
+    .add-doctor-modal-header {
+        padding: 1.35rem 1.6rem 0.5rem;
+    }
+    .add-doctor-modal-avatar-badge {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.14) 0%, rgba(59, 130, 246, 0.24) 100%);
+        color: #2563eb;
+        display: grid;
+        place-items: center;
+        font-size: 1.35rem;
+    }
+    body[data-theme="dark"] .add-doctor-modal-avatar-badge {
+        background: rgba(59, 130, 246, 0.2);
+        color: #60a5fa;
+    }
+    .add-doctor-info-box {
+        background: rgba(37, 99, 235, 0.05);
+        border-left: 4px solid #2563eb;
+        border-radius: 12px;
+        padding: 0.9rem 1.15rem;
+        border-top: 1px solid rgba(37, 99, 235, 0.1);
+        border-right: 1px solid rgba(37, 99, 235, 0.1);
+        border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+    }
+    body[data-theme="dark"] .add-doctor-info-box {
+        background: rgba(37, 99, 235, 0.08);
+        border-left-color: #3b82f6;
+        border-color: rgba(59, 130, 246, 0.2);
+    }
+    .custom-input {
+        border-radius: 12px;
+        border: 1px solid var(--dashboard-border);
+        background: var(--dashboard-panel);
+        color: var(--dashboard-text);
+        font-size: 0.92rem;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .custom-input:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        background: var(--dashboard-panel);
+        color: var(--dashboard-text);
+    }
+    body[data-theme="dark"] .custom-input {
+        background: #1e293b;
+        border-color: rgba(148, 163, 184, 0.25);
+        color: #f1f5f9;
+    }
+    body[data-theme="dark"] .custom-input:focus {
+        border-color: #60a5fa;
+        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+    }
+    .doctor-avatar-circle {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--dashboard-panel);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+    }
+    .doctor-bio-truncate {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        font-size: 0.85rem;
+        color: var(--dashboard-muted);
+        line-height: 1.45;
+    }
+    .doctor-action-btn.view {
+        color: #475569;
+        background: #f1f5f9;
+        border-color: #e2e8f0;
+    }
+    .doctor-action-btn.view:hover {
+        background: #e2e8f0;
+        color: #1e293b;
+    }
+    body[data-theme="dark"] .doctor-action-btn.view {
+        color: #cbd5e1;
+        background: rgba(148, 163, 184, 0.12);
+        border-color: rgba(148, 163, 184, 0.2);
+    }
+    body[data-theme="dark"] .doctor-action-btn.view:hover {
+        background: rgba(148, 163, 184, 0.2);
+    }
+    .empty-state-box .empty-state-icon {
+        font-size: 3rem;
+        color: var(--dashboard-muted);
+        opacity: 0.5;
+    }
 </style>
 
 <div class="admin-dashboard-page">
@@ -900,17 +1066,6 @@
             </nav>
 
             <div class="sidebar-collapse-control"><button class="portal-sidebar-toggle" type="button" data-sidebar-toggle aria-label="Collapse navigation" title="Collapse navigation" aria-expanded="true"><i class="bi bi-layout-sidebar-inset"></i></button></div>
-
-            <div class="admin-sidebar-footer">
-                <div class="admin-user">
-                    <div class="admin-user-badge">A</div>
-                    <div>
-                        <strong>{{ request.user.username }}</strong>
-                        <small>Admin</small>
-                    </div>
-                </div>
-                <button class="btn btn-sm btn-outline-light" type="button" data-theme-toggle title="Toggle light/dark mode" aria-label="Toggle light/dark mode"><i class="bi bi-moon-stars"></i></button>
-            </div>
         </aside>
 
         <main class="admin-main">
@@ -1158,59 +1313,164 @@
 
                 {% if request.user.role == 'ADMIN' %}
                 <section id="doctors-tab" class="admin-section tab-pane fade" role="tabpanel">
-                    <div class="row g-3">
-                        <div class="col-12 col-lg-4">
-                            <div class="section-card h-100">
-                                <h5>Add new doctor</h5>
-                                <form method="post" enctype="multipart/form-data" class="admin-form">
-                                    {% csrf_token %}
-                                    {{ doctor_form.as_p }}
-                                    <button type="submit" name="save_doctor" class="btn btn-primary"><i class="bi bi-person-plus-fill me-1"></i>Save doctor</button>
-                                </form>
+                    <!-- Unique Doctor Module Header Card with Descriptive Module Paragraph -->
+                    <div class="doctor-module-header-card mb-3">
+                        <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
+                            <div class="d-flex align-items-start gap-3">
+                                <div class="doctor-module-badge-icon">
+                                    <i class="bi bi-hospital"></i>
+                                </div>
+                                <div>
+                                    <div class="d-flex align-items-center gap-2 flex-wrap mb-1">
+                                        <h3 class="m-0 fw-bold doctor-module-title">Doctors &amp; Specialists</h3>
+                                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle fw-semibold px-2.5 py-1 rounded-pill">
+                                            <i class="bi bi-check-circle-fill me-1 text-primary"></i>{{ doctors|length }} Active
+                                        </span>
+                                    </div>
+                                    <p class="doctor-module-description mb-0">
+                                        Comprehensive directory of accredited healthcare providers and clinical specialists at FSUU Clinic. Review physician credentials, configure recurring consultation schedules, monitor department availability, or enroll new medical staff into the directory.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                                <button type="button" class="btn btn-primary btn-add-doctor-trigger shadow-sm" data-bs-toggle="modal" data-bs-target="#addDoctorModal">
+                                    <i class="bi bi-person-plus-fill me-1.5"></i> Add New Doctor
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Maximized Metrics Strip -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="metric-card">
+                                <span class="metric-icon"><i class="bi bi-person-badge-fill text-primary"></i></span>
+                                <span class="metric-label">Active Physicians</span>
+                                <div class="metric-value">{{ doctors|length }}</div>
+                                <small class="text-muted"><i class="bi bi-shield-check text-success me-1"></i>Accredited clinical faculty</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="metric-card">
+                                <span class="metric-icon"><i class="bi bi-heart-pulse-fill text-danger"></i></span>
+                                <span class="metric-label">Clinical Departments</span>
+                                <div class="metric-value" id="doctorSpecialtyCount">-</div>
+                                <small class="text-muted"><i class="bi bi-diagram-3 me-1"></i>Active medical specialties</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="metric-card">
+                                <span class="metric-icon"><i class="bi bi-calendar3-week text-success"></i></span>
+                                <span class="metric-label">Weekly Schedules</span>
+                                <div class="metric-value">
+                                    <a href="{% url 'admin_dashboard' %}?tab=schedules" class="text-decoration-none text-reset stretched-link fs-6 fw-bold">Manage <i class="bi bi-arrow-right-short"></i></a>
+                                </div>
+                                <small class="text-muted"><i class="bi bi-clock-history me-1"></i>Consultation duty hours</small>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="metric-card">
+                                <span class="metric-icon"><i class="bi bi-archive-fill text-warning"></i></span>
+                                <span class="metric-label">Archived Doctors</span>
+                                <div class="metric-value">{{ archived_doctors|length }}</div>
+                                <small class="text-muted">
+                                    <a href="{% url 'admin_settings' %}?settings=archives&archive_tab=doctors" class="text-decoration-none text-muted">View in Settings <i class="bi bi-arrow-right-short"></i></a>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Maximized Full-Width Doctors Directory Table -->
+                    <div class="section-card w-100 p-3 p-lg-4">
+                        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-3 pb-3 border-bottom border-light-subtle">
+                            <div>
+                                <h5 class="mb-1 fw-bold">Physicians Directory</h5>
+                                <small class="text-muted">Click any doctor row to view full credentials, bio, and assigned consultation times.</small>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                                <div class="input-group input-group-sm" style="max-width: 280px;">
+                                    <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                                    <input type="search" id="doctorTableSearchInput" class="form-control border-start-0 ps-0" placeholder="Search name, specialty, bio..." autocomplete="off">
+                                </div>
+                                <select id="doctorSpecialtyFilter" class="form-select form-select-sm" style="max-width: 190px;">
+                                    <option value="all">All Specialties</option>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="col-12 col-lg-8">
-                            <div class="section-card h-100">
-                                <h5>Doctors directory</h5>
-                                <div class="table-responsive">
-                                    <table class="table admin-table align-middle">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Specialty</th>
-                                                <th>Sex</th>
-                                                <th>Bio</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for doctor in doctors %}
-                                            <tr class="doctor-row-clickable" data-doctor-id="{{ doctor.id }}" data-doctor-name="{{ doctor.name }}" data-doctor-specialty="{{ doctor.specialty }}" data-doctor-sex="{{ doctor.get_sex_display }}" data-doctor-bio="{{ doctor.bio|default:'Experienced physician devoted to patient care.'|escapejs }}" data-doctor-photo="{% if doctor.photo %}{{ doctor.photo.url }}{% endif %}">
-                                                <td>
-                                                    <div class="patient-identity">
-                                                        <span class="initials-avatar">{{ doctor.name|slice:':1'|upper }}</span>
-                                                        <span><strong>{{ doctor.name }}</strong><small class="patient-handle">{{ doctor.specialty }}</small></span>
-                                                    </div>
-                                                </td>
-                                                <td>{{ doctor.specialty }}</td>
-                                                <td>{{ doctor.get_sex_display }}</td>
-                                                <td>{{ doctor.bio|default:'-' }}</td>
-                                                <td>
-                                                    <div class="d-flex flex-wrap gap-2">
-                                                        <a class="doctor-action-btn edit" href="{% url 'doctor_edit' doctor.id %}" onclick="event.stopPropagation();"><i class="bi bi-pencil-square"></i>Edit</a>
-                                                        <a class="doctor-action-btn schedule" href="{% url 'admin_dashboard' %}?tab=schedules&doctor_id={{ doctor.id }}" onclick="event.stopPropagation();"><i class="bi bi-calendar3"></i>Schedules</a>
-                                                        <a class="doctor-action-btn archive" href="{% url 'doctor_delete' doctor.id %}" data-confirm data-confirm-type="warning" data-confirm-title="Archive Doctor Profile?" data-confirm-message="This doctor will be hidden from the public directory and cannot be booked until restored. Continue?" data-confirm-text="Archive Doctor" onclick="event.stopPropagation();"><i class="bi bi-archive-fill"></i>Archive</a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            {% empty %}
-                                            <tr><td colspan="5" class="text-center text-muted">No doctors yet.</td></tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table admin-table align-middle mb-0" id="adminDoctorsTable">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width: 240px;">Doctor Profile</th>
+                                        <th>Specialty</th>
+                                        <th>Sex</th>
+                                        <th style="min-width: 280px;">Clinical Bio</th>
+                                        <th class="text-end" style="min-width: 220px;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for doctor in doctors %}
+                                    <tr class="doctor-row-clickable" data-doctor-id="{{ doctor.id }}" data-doctor-name="{{ doctor.name }}" data-doctor-specialty="{{ doctor.specialty }}" data-doctor-sex="{{ doctor.get_sex_display }}" data-doctor-bio="{{ doctor.bio|default:'Experienced physician devoted to patient care.'|escapejs }}" data-doctor-photo="{% if doctor.photo %}{{ doctor.photo.url }}{% endif %}">
+                                        <td>
+                                            <div class="patient-identity">
+                                                {% if doctor.photo %}
+                                                <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" class="doctor-avatar-circle" onerror="this.style.display='none'">
+                                                {% else %}
+                                                <span class="initials-avatar">{{ doctor.name|slice:':1'|upper }}</span>
+                                                {% endif %}
+                                                <div>
+                                                    <strong class="d-block">{{ doctor.name }}</strong>
+                                                    <small class="patient-handle">{{ doctor.specialty }}</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1 rounded-pill fw-semibold">{{ doctor.specialty }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="small fw-medium">
+                                                {% if doctor.sex == 'MALE' %}<i class="bi bi-gender-male text-primary me-1"></i>Male
+                                                {% elif doctor.sex == 'FEMALE' %}<i class="bi bi-gender-female text-danger me-1"></i>Female
+                                                {% else %}<i class="bi bi-gender-ambiguous text-secondary me-1"></i>{{ doctor.get_sex_display }}
+                                                {% endif %}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="doctor-bio-truncate" title="{{ doctor.bio|default:'' }}">
+                                                {{ doctor.bio|default:'-' }}
+                                            </div>
+                                        </td>
+                                        <td class="text-end" onclick="event.stopPropagation();">
+                                            <div class="d-inline-flex flex-wrap justify-content-end gap-1.5">
+                                                <button type="button" class="doctor-action-btn view" onclick="event.stopPropagation(); triggerDoctorModalFromRow(this);" title="View Doctor Profile"><i class="bi bi-eye"></i>Profile</button>
+                                                <a class="doctor-action-btn edit" href="{% url 'doctor_edit' doctor.id %}" onclick="event.stopPropagation();"><i class="bi bi-pencil-square"></i>Edit</a>
+                                                <a class="doctor-action-btn schedule" href="{% url 'admin_dashboard' %}?tab=schedules&doctor_id={{ doctor.id }}" onclick="event.stopPropagation();"><i class="bi bi-calendar3"></i>Schedules</a>
+                                                <a class="doctor-action-btn archive" href="{% url 'doctor_delete' doctor.id %}" data-confirm data-confirm-type="warning" data-confirm-title="Archive Doctor Profile?" data-confirm-message="This doctor will be hidden from the public directory and cannot be booked until restored. Continue?" data-confirm-text="Archive Doctor" onclick="event.stopPropagation();"><i class="bi bi-archive-fill"></i>Archive</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr id="emptyDoctorsRow">
+                                        <td colspan="5" class="text-center py-5">
+                                            <div class="empty-state-box py-4">
+                                                <div class="empty-state-icon mb-3"><i class="bi bi-person-badge"></i></div>
+                                                <h5 class="fw-bold mb-1">No Doctors in Directory</h5>
+                                                <p class="text-muted small mb-3">Get started by registering your first healthcare practitioner.</p>
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDoctorModal">
+                                                    <i class="bi bi-person-plus-fill me-1"></i>Add New Doctor
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr id="noSearchResultRow" style="display: none;">
+                                        <td colspan="5" class="text-center py-4 text-muted">
+                                            <i class="bi bi-search me-1"></i> No physicians match your search criteria.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </section>
@@ -1218,108 +1478,51 @@
 
                 {% if request.user.role == 'ADMIN' %}
                 <section id="schedules-tab" class="admin-section tab-pane fade" role="tabpanel">
-                    <div class="row g-3 mb-3">
-                        <div class="col-12 col-lg-6">
-                            <div class="section-card h-100">
-                                <h5>{% if edit_schedule_id %}Edit weekly schedule{% else %}Add schedule{% endif %}</h5>
-                                <p class="text-muted small mb-3">Set recurring weekly availability. Select one or more days for the same hours.</p>
-                                <form method="post" class="admin-form">
-                                    {% csrf_token %}
-                                    {% if edit_schedule_id %}<input type="hidden" name="edit_schedule" value="{{ edit_schedule_id }}">{% endif %}
-                                    <div class="mb-3">
-                                        <label class="form-label" for="scheduleDoctorSearch">Doctor</label>
-                                        <input id="scheduleDoctorSearch" class="form-control mb-2" type="search" placeholder="Search doctors" data-doctor-search="schedule" autocomplete="off">
-                                        {{ schedule_form.doctor }}
-                                        {% for error in schedule_form.doctor.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                                    </div>
-                                    <div class="mb-3">
-                                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
-                                            <label class="form-label mb-0">Days of week</label>
-                                            <div class="d-flex flex-wrap gap-2">
-                                                <button class="btn btn-sm btn-outline-primary" type="button" data-select-weekdays>Select Weekdays (Mon–Fri)</button>
-                                                <button class="btn btn-sm btn-outline-secondary" type="button" data-select-all-days>Select All Days</button>
-                                            </div>
-                                        </div>
-                                        <div class="schedule-day-options" role="group" aria-label="Select weekly availability days">
-                                            {% for checkbox in schedule_form.days_of_week %}
-                                            <label class="schedule-day-pill" for="{{ checkbox.id_for_label }}">
-                                                {{ checkbox.tag }}<span>{{ checkbox.choice_label }}</span>
-                                            </label>
-                                            {% endfor %}
-                                        </div>
-                                        {% for error in schedule_form.days_of_week.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
-                                    </div>
-                                    <div class="row g-3 mb-3">
-                                        <div class="col-sm-6">
-                                            <label class="form-label" for="{{ schedule_form.start_time.id_for_label }}">Start Time</label>
-                                            {{ schedule_form.start_time }}
-                                            {% for error in schedule_form.start_time.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label class="form-label" for="{{ schedule_form.end_time.id_for_label }}">End Time</label>
-                                            {{ schedule_form.end_time }}
-                                            {% for error in schedule_form.end_time.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                                        </div>
-                                        <div class="col-12">
-                                            <label class="form-label" for="{{ schedule_form.slot_duration.id_for_label }}">Slot Duration (minutes)</label>
-                                            {{ schedule_form.slot_duration }}
-                                            <div class="form-text">{{ schedule_form.slot_duration.help_text }}</div>
-                                            {% for error in schedule_form.slot_duration.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                                        </div>
-                                    </div>
-                                    {% for error in schedule_form.non_field_errors %}<div class="text-danger small mb-2">{{ error }}</div>{% endfor %}
-                                    <button type="submit" name="save_schedule" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>{% if edit_schedule_id %}Update Schedule{% else %}Save Schedule{% endif %}</button>
-                                    {% if edit_schedule_id %}<a class="btn btn-outline-secondary ms-1" href="{% url 'admin_dashboard' %}?tab=schedules">Cancel</a>{% endif %}
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-lg-6">
-                            <div class="section-card h-100">
-                                <h5>Block a slot</h5>
-                                <p class="text-muted small mb-3">Block specific dates or hours for leaves, meetings, or holidays. This overrides regular weekly availability.</p>
-                                <form method="post" class="admin-form">
-                                    {% csrf_token %}
-                                    <div class="mb-3">
-                                        <label class="form-label" for="blockedDoctorSearch">Doctor</label>
-                                        <input id="blockedDoctorSearch" class="form-control mb-2" type="search" placeholder="Search doctors" data-doctor-search="blocked" autocomplete="off">
-                                        {{ blocked_form.doctor }}
-                                        {% for error in blocked_form.doctor.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="{{ blocked_form.date.id_for_label }}">Specific Date</label>
-                                        {{ blocked_form.date }}
-                                        {% for error in blocked_form.date.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        {{ blocked_form.full_day }}
-                                        <label class="form-check-label" for="{{ blocked_form.full_day.id_for_label }}">Block Full Day</label>
-                                    </div>
-                                    <div class="row g-3 mb-3">
-                                        <div class="col-sm-6">
-                                            <label class="form-label" for="{{ blocked_form.start_time.id_for_label }}">Start Time</label>
-                                            {{ blocked_form.start_time }}
-                                            {% for error in blocked_form.start_time.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label class="form-label" for="{{ blocked_form.end_time.id_for_label }}">End Time</label>
-                                            {{ blocked_form.end_time }}
-                                            {% for error in blocked_form.end_time.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                                        </div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="{{ blocked_form.reason.id_for_label }}">Reason</label>
-                                        {{ blocked_form.reason }}
-                                        {% for error in blocked_form.reason.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
-                                    </div>
-                                    <button type="submit" name="save_blocked" class="btn btn-blocked-slot"><i class="bi bi-slash-circle me-1"></i>Save Blocked Slot</button>
-                                </form>
-                            </div>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                        <h4 class="mb-0 fw-bold" style="color: var(--dashboard-heading);">Schedules Management</h4>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#addScheduleModal">
+                                <i class="bi bi-plus-lg me-1"></i>Add Schedule
+                            </button>
+                            <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#blockSlotModal">
+                                <i class="bi bi-slash-circle me-1"></i>Block Slot
+                            </button>
                         </div>
                     </div>
 
+                    {% if edit_schedule_id %}
+                    <div class="alert alert-info mb-3">
+                        <i class="bi bi-info-circle-fill me-2"></i>You are currently editing a schedule. 
+                        <a href="{% url 'admin_dashboard' %}?tab=schedules" class="btn btn-sm btn-outline-info ms-2">Cancel Edit</a>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var editModal = new bootstrap.Modal(document.getElementById('addScheduleModal'));
+                                editModal.show();
+                            });
+                        </script>
+                    </div>
+                    {% endif %}
+
+                    {% if schedule_form.errors or schedule_form.non_field_errors %}
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            var editModal = new bootstrap.Modal(document.getElementById('addScheduleModal'));
+                            editModal.show();
+                        });
+                    </script>
+                    {% endif %}
+                    
+                    {% if blocked_form.errors or blocked_form.non_field_errors %}
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            var blockModal = new bootstrap.Modal(document.getElementById('blockSlotModal'));
+                            blockModal.show();
+                        });
+                    </script>
+                    {% endif %}
+
                     <div class="section-card mb-3">
-                        <h5>Active Weekly Schedules</h5>
+                        <h5 class="mb-3">Active Weekly Schedules</h5>
                         <div class="table-responsive">
                             <table class="table admin-table align-middle">
                                 <thead>
@@ -1385,6 +1588,145 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+
+                    <!-- Add Schedule Modal -->
+                    <div class="modal fade doctor-detail-modal" id="addScheduleModal" tabindex="-1" aria-labelledby="addScheduleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                            <div class="modal-content border-0 shadow-lg">
+                                <div class="modal-header border-0 pb-0">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title-icon" style="width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);color:#fff;display:grid;place-items:center;font-size:1.2rem;">
+                                            <i class="bi bi-calendar-plus"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="modal-title fw-bold fs-5 mb-0" id="addScheduleModalLabel">{% if edit_schedule_id %}Edit weekly schedule{% else %}Add schedule{% endif %}</h5>
+                                            <span class="text-muted small">Set recurring weekly availability</span>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body p-4 pt-3">
+                                    <form method="post" class="admin-form">
+                                        {% csrf_token %}
+                                        {% if edit_schedule_id %}<input type="hidden" name="edit_schedule" value="{{ edit_schedule_id }}">{% endif %}
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold small mb-1" for="scheduleDoctorSearch">Doctor</label>
+                                            <input id="scheduleDoctorSearch" class="form-control form-control-lg custom-input mb-2" type="search" placeholder="Search doctors" data-doctor-search="schedule" autocomplete="off">
+                                            {{ schedule_form.doctor }}
+                                            {% for error in schedule_form.doctor.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                                                <label class="form-label fw-semibold small mb-0">Days of week</label>
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    <button class="btn btn-sm btn-outline-primary rounded-pill" type="button" data-select-weekdays>Weekdays (Mon–Fri)</button>
+                                                    <button class="btn btn-sm btn-outline-secondary rounded-pill" type="button" data-select-all-days>All Days</button>
+                                                </div>
+                                            </div>
+                                            <div class="schedule-day-options" role="group" aria-label="Select weekly availability days">
+                                                {% for checkbox in schedule_form.days_of_week %}
+                                                <label class="schedule-day-pill" for="{{ checkbox.id_for_label }}">
+                                                    {{ checkbox.tag }}<span>{{ checkbox.choice_label }}</span>
+                                                </label>
+                                                {% endfor %}
+                                            </div>
+                                            {% for error in schedule_form.days_of_week.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                                        </div>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-sm-6">
+                                                <label class="form-label fw-semibold small mb-1" for="{{ schedule_form.start_time.id_for_label }}">Start Time</label>
+                                                {{ schedule_form.start_time }}
+                                                {% for error in schedule_form.start_time.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="form-label fw-semibold small mb-1" for="{{ schedule_form.end_time.id_for_label }}">End Time</label>
+                                                {{ schedule_form.end_time }}
+                                                {% for error in schedule_form.end_time.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label fw-semibold small mb-1" for="{{ schedule_form.slot_duration.id_for_label }}">Slot Duration (minutes)</label>
+                                                {{ schedule_form.slot_duration }}
+                                                <div class="text-muted small mt-1">{{ schedule_form.slot_duration.help_text }}</div>
+                                                {% for error in schedule_form.slot_duration.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                                            </div>
+                                        </div>
+                                        {% for error in schedule_form.non_field_errors %}<div class="text-danger small mb-2">{{ error }}</div>{% endfor %}
+                                        
+                                        <div class="modal-footer border-0 px-0 pb-0 mt-4 pt-3 d-flex justify-content-between align-items-center">
+                                            <button type="button" class="btn btn-outline-secondary px-3 py-2 rounded-3" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="submit" name="save_schedule" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm fw-semibold">
+                                                <i class="bi bi-plus-lg me-1"></i>{% if edit_schedule_id %}Update Schedule{% else %}Save Schedule{% endif %}
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Block Slot Modal -->
+                    <div class="modal fade doctor-detail-modal" id="blockSlotModal" tabindex="-1" aria-labelledby="blockSlotModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content border-0 shadow-lg">
+                                <div class="modal-header border-0 pb-0">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title-icon bg-danger-subtle text-danger" style="width:42px;height:42px;border-radius:14px;display:grid;place-items:center;font-size:1.2rem;">
+                                            <i class="bi bi-slash-circle"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="modal-title fw-bold fs-5 mb-0" id="blockSlotModalLabel">Block a slot</h5>
+                                            <span class="text-muted small">Block specific dates or hours for leaves</span>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body p-4 pt-3">
+                                    <form method="post" class="admin-form">
+                                        {% csrf_token %}
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold small mb-1" for="blockedDoctorSearch">Doctor</label>
+                                            <input id="blockedDoctorSearch" class="form-control form-control-lg custom-input mb-2" type="search" placeholder="Search doctors" data-doctor-search="blocked" autocomplete="off">
+                                            {{ blocked_form.doctor }}
+                                            {% for error in blocked_form.doctor.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold small mb-1" for="{{ blocked_form.date.id_for_label }}">Specific Date</label>
+                                            {{ blocked_form.date }}
+                                            {% for error in blocked_form.date.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            {{ blocked_form.full_day }}
+                                            <label class="form-check-label fw-semibold small" for="{{ blocked_form.full_day.id_for_label }}">Block Full Day</label>
+                                        </div>
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-sm-6">
+                                                <label class="form-label fw-semibold small mb-1" for="{{ blocked_form.start_time.id_for_label }}">Start Time</label>
+                                                {{ blocked_form.start_time }}
+                                                {% for error in blocked_form.start_time.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="form-label fw-semibold small mb-1" for="{{ blocked_form.end_time.id_for_label }}">End Time</label>
+                                                {{ blocked_form.end_time }}
+                                                {% for error in blocked_form.end_time.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold small mb-1" for="{{ blocked_form.reason.id_for_label }}">Reason</label>
+                                            {{ blocked_form.reason }}
+                                            {% for error in blocked_form.reason.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+                                        </div>
+                                        
+                                        <div class="modal-footer border-0 px-0 pb-0 mt-4 pt-3 d-flex justify-content-between align-items-center">
+                                            <button type="button" class="btn btn-outline-secondary px-3 py-2 rounded-3" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="submit" name="save_blocked" class="btn btn-danger px-4 py-2 rounded-3 shadow-sm fw-semibold">
+                                                <i class="bi bi-slash-circle me-1"></i>Save Blocked Slot
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -1658,6 +2000,124 @@
         </div>
     </div>
 </div>
+
+{% if request.user.role == 'ADMIN' %}
+<div class="modal fade doctor-detail-modal" id="addDoctorModal" tabindex="-1" aria-labelledby="addDoctorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content add-doctor-modal-content border-0 shadow-lg">
+            <div class="modal-header add-doctor-modal-header border-0 pb-0">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="add-doctor-modal-avatar-badge">
+                        <i class="bi bi-person-plus-fill"></i>
+                    </div>
+                    <div>
+                        <h5 class="modal-title fw-bold fs-5 mb-0" id="addDoctorModalLabel">Add New Doctor</h5>
+                        <span class="text-muted small">Register a healthcare practitioner to the clinic directory</span>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body p-4 pt-3">
+                <!-- Informative Module Paragraph / Explanatory Banner -->
+                <div class="add-doctor-info-box mb-4">
+                    <div class="d-flex align-items-start gap-2.5">
+                        <i class="bi bi-info-circle-fill text-primary flex-shrink-0 mt-0.5 fs-5"></i>
+                        <div>
+                            <strong class="d-block text-dark-emphasis mb-0.5">Physician Directory Enrollment</strong>
+                            <p class="mb-0 text-muted small lh-sm">
+                                Enter the doctor's complete official credentials and primary clinical department. Their profile and photo will be displayed to patients during appointment booking. You will be able to assign weekly working hours immediately after saving.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <form method="post" enctype="multipart/form-data" class="admin-form" id="addDoctorModalForm">
+                    {% csrf_token %}
+                    
+                    {% if doctor_form.errors %}
+                    <div class="alert alert-danger mb-3 p-2.5 rounded-3 small">
+                        <i class="bi bi-exclamation-triangle-fill me-1"></i> Please correct the highlighted errors below before saving.
+                    </div>
+                    {% endif %}
+
+                    <div class="row g-3">
+                        <div class="col-12 col-md-7">
+                            <label class="form-label fw-semibold small mb-1" for="id_doc_name">
+                                <i class="bi bi-person-fill text-primary me-1"></i>Doctor Full Name <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" name="name" id="id_doc_name" class="form-control form-control-lg custom-input" placeholder="e.g. Dr. Maria Santos, MD" required value="{{ doctor_form.name.value|default:'' }}">
+                            {% for err in doctor_form.name.errors %}
+                            <div class="text-danger small mt-1">{{ err }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-12 col-md-5">
+                            <label class="form-label fw-semibold small mb-1" for="id_doc_sex">
+                                <i class="bi bi-gender-ambiguous text-primary me-1"></i>Sex / Gender <span class="text-danger">*</span>
+                            </label>
+                            <select name="sex" id="id_doc_sex" class="form-select form-select-lg custom-input">
+                                <option value="MALE" {% if doctor_form.sex.value == 'MALE' or not doctor_form.sex.value %}selected{% endif %}>Male</option>
+                                <option value="FEMALE" {% if doctor_form.sex.value == 'FEMALE' %}selected{% endif %}>Female</option>
+                                <option value="OTHER" {% if doctor_form.sex.value == 'OTHER' %}selected{% endif %}>Other</option>
+                            </select>
+                            {% for err in doctor_form.sex.errors %}
+                            <div class="text-danger small mt-1">{{ err }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-semibold small mb-1" for="id_doc_specialty">
+                                <i class="bi bi-heart-pulse-fill text-danger me-1"></i>Medical Specialty <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" name="specialty" id="id_doc_specialty" class="form-control form-control-lg custom-input" placeholder="e.g. Cardiology, Dermatology, Pediatrics, General Medicine" required value="{{ doctor_form.specialty.value|default:'' }}">
+                            {% for err in doctor_form.specialty.errors %}
+                            <div class="text-danger small mt-1">{{ err }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-semibold small mb-1" for="id_doc_bio">
+                                <i class="bi bi-journal-medical text-primary me-1"></i>Clinical Biography &amp; Background
+                            </label>
+                            <textarea name="bio" id="id_doc_bio" rows="4" class="form-control custom-input" placeholder="Provide a summary of the physician's medical training, clinical expertise, or hospital affiliations...">{{ doctor_form.bio.value|default:'' }}</textarea>
+                            <small class="text-muted d-block mt-1">Information visible to patients when selecting a physician for appointments.</small>
+                            {% for err in doctor_form.bio.errors %}
+                            <div class="text-danger small mt-1">{{ err }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-semibold small mb-1" for="id_doc_photo">
+                                <i class="bi bi-camera-fill text-primary me-1"></i>Doctor Portrait Photo
+                            </label>
+                            <div class="p-3 border rounded-3 bg-light-subtle">
+                                <input type="file" name="photo" id="id_doc_photo" class="form-control" accept="image/*">
+                                <div class="d-none mt-2 align-items-center gap-2" id="doctorPhotoPreviewWrap">
+                                    <img id="doctorPhotoPreview" src="" alt="Doctor photo preview" class="rounded-circle border shadow-sm" style="width: 56px; height: 56px; object-fit: cover;">
+                                    <span class="small text-muted">Selected photo preview</span>
+                                </div>
+                            </div>
+                            {% for err in doctor_form.photo.errors %}
+                            <div class="text-danger small mt-1">{{ err }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="modal-footer border-0 px-0 pb-0 mt-4 pt-3 d-flex justify-content-between align-items-center">
+                        <button type="button" class="btn btn-outline-secondary px-3.5 py-2 rounded-3" data-bs-dismiss="modal">
+                            <i class="bi bi-x me-1"></i>Cancel
+                        </button>
+                        <button type="submit" name="save_doctor" class="btn btn-primary px-4 py-2 rounded-3 shadow-sm fw-semibold">
+                            <i class="bi bi-person-plus-fill me-1.5"></i>Save Doctor
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
 
 {% block scripts %}
@@ -1944,5 +2404,116 @@ document.querySelectorAll('[data-restock-item]').forEach(function (button) {
         if (itemSelect) itemSelect.value = this.dataset.restockItem;
     });
 });
+
+// ============================================================
+// DOCTOR DIRECTORY ENHANCEMENTS & ADD DOCTOR MODAL LOGIC
+// ============================================================
+function triggerDoctorModalFromRow(btn) {
+    const row = btn.closest('.doctor-row-clickable');
+    if (!row) return;
+    detailDoctorName.textContent = row.dataset.doctorName;
+    detailDoctorSpecialty.textContent = row.dataset.doctorSpecialty;
+    detailDoctorSex.textContent = row.dataset.doctorSex || 'Not specified';
+    detailDoctorBio.textContent = row.dataset.doctorBio || 'Experienced physician devoted to patient care.';
+    updateDoctorAvatar(detailDoctorAvatar, row.dataset.doctorName, row.dataset.doctorPhoto || '');
+    detailDoctorSchedules.href = '{% url "admin_dashboard" %}?tab=schedules&doctor_id=' + encodeURIComponent(row.dataset.doctorId);
+    doctorDetailModal.show();
+}
+
+(function initDoctorDirectory() {
+    const searchInput = document.getElementById('doctorTableSearchInput');
+    const specialtyFilter = document.getElementById('doctorSpecialtyFilter');
+    const rows = document.querySelectorAll('#adminDoctorsTable tbody tr.doctor-row-clickable');
+    const emptyRow = document.getElementById('noSearchResultRow');
+    const specialtyCountEl = document.getElementById('doctorSpecialtyCount');
+
+    if (rows.length > 0) {
+        const specialties = new Set();
+        rows.forEach(function (row) {
+            const spec = (row.dataset.doctorSpecialty || '').trim();
+            if (spec) specialties.add(spec);
+        });
+
+        if (specialtyCountEl) {
+            specialtyCountEl.textContent = specialties.size;
+        }
+
+        if (specialtyFilter) {
+            specialties.forEach(function (spec) {
+                const opt = document.createElement('option');
+                opt.value = spec.toLowerCase();
+                opt.textContent = spec;
+                specialtyFilter.appendChild(opt);
+            });
+        }
+    } else if (specialtyCountEl) {
+        specialtyCountEl.textContent = '0';
+    }
+
+    function applyDoctorFilter() {
+        const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+        const selectedSpecialty = (specialtyFilter ? specialtyFilter.value : 'all').toLowerCase();
+        let matchCount = 0;
+
+        rows.forEach(function (row) {
+            const name = (row.dataset.doctorName || '').toLowerCase();
+            const specialty = (row.dataset.doctorSpecialty || '').toLowerCase();
+            const bio = (row.dataset.doctorBio || '').toLowerCase();
+            const sex = (row.dataset.doctorSex || '').toLowerCase();
+
+            const matchesQuery = !query || name.includes(query) || specialty.includes(query) || bio.includes(query) || sex.includes(query);
+            const matchesSpecialty = selectedSpecialty === 'all' || specialty === selectedSpecialty;
+
+            if (matchesQuery && matchesSpecialty) {
+                row.style.display = '';
+                matchCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        if (emptyRow) {
+            emptyRow.style.display = (matchCount === 0 && rows.length > 0) ? '' : 'none';
+        }
+    }
+
+    searchInput?.addEventListener('input', applyDoctorFilter);
+    specialtyFilter?.addEventListener('change', applyDoctorFilter);
+
+    // Live photo preview in Add Doctor modal
+    const photoInput = document.getElementById('id_doc_photo');
+    const photoWrap = document.getElementById('doctorPhotoPreviewWrap');
+    const photoPreview = document.getElementById('doctorPhotoPreview');
+
+    photoInput?.addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                if (photoPreview) photoPreview.src = e.target.result;
+                if (photoWrap) {
+                    photoWrap.classList.remove('d-none');
+                    photoWrap.classList.add('d-flex');
+                }
+            };
+            reader.readAsDataURL(this.files[0]);
+        } else {
+            if (photoWrap) {
+                photoWrap.classList.add('d-none');
+                photoWrap.classList.remove('d-flex');
+            }
+        }
+    });
+
+    {% if doctor_form.errors %}
+    // Auto-open modal if there were submission errors
+    const docModalEl = document.getElementById('addDoctorModal');
+    if (docModalEl) {
+        const modalInstance = new bootstrap.Modal(docModalEl);
+        modalInstance.show();
+        const doctorsTabBtn = document.querySelector('button[data-bs-target="#doctors-tab"]');
+        if (doctorsTabBtn) doctorsTabBtn.click();
+    }
+    {% endif %}
+})();
 </script>
 {% endblock %}

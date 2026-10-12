@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 
 from admin_dashboard.models import Appointment, Doctor
 
@@ -101,16 +102,22 @@ def messages_page(request):
     selected_contact_recent_appointments = []
     unread_counts = {}
     for contact in contacts:
-        unread_counts[contact.id] = Message.objects.filter(recipient=request.user, sender=contact, is_read=False).count()
+        unread_counts[contact.id] = Message.objects.filter(
+            recipient=request.user,
+            sender=contact,
+            is_read=False,
+            is_unsent=False,
+            deleted_by_recipient=False,
+        ).count()
 
     if contact_id:
         selected_contact = User.objects.filter(pk=contact_id).first()
         if selected_contact:
             thread = Message.objects.filter(
-                Q(sender=request.user, recipient=selected_contact) |
-                Q(sender=selected_contact, recipient=request.user)
+                (Q(sender=request.user, recipient=selected_contact) & Q(deleted_by_sender=False)) |
+                (Q(sender=selected_contact, recipient=request.user) & Q(deleted_by_recipient=False))
             ).order_by('created_at')
-            Message.objects.filter(recipient=request.user, sender=selected_contact, is_read=False).update(is_read=True)
+            Message.objects.filter(recipient=request.user, sender=selected_contact, is_read=False, is_unsent=False).update(is_read=True)
             unread_counts[selected_contact.id] = 0
 
             if selected_contact.role == UserRole.PATIENT and request.user.role in {UserRole.ADMIN, UserRole.STAFF}:
@@ -178,7 +185,12 @@ def send_message(request):
 
 @login_required
 def notification_payload(request):
-    unread_messages = Message.objects.filter(recipient=request.user, is_read=False)
+    unread_messages = Message.objects.filter(
+        recipient=request.user,
+        is_read=False,
+        is_unsent=False,
+        deleted_by_recipient=False,
+    )
     unread_count = unread_messages.count()
     notifications = unread_messages.select_related('sender').order_by('-created_at')[:5]
     items = [
@@ -192,6 +204,93 @@ def notification_payload(request):
         for item in notifications
     ]
     return JsonResponse({'count': unread_count, 'message_count': unread_count, 'items': items})
+
+
+@login_required
+@require_POST
+def delete_or_unsend_message(request, message_id):
+    message_obj = get_object_or_404(Message, pk=message_id)
+
+    is_sender = (message_obj.sender == request.user)
+    is_recipient = (message_obj.recipient == request.user)
+    is_admin_or_staff = (
+        request.user.role in {UserRole.ADMIN, UserRole.STAFF}
+        or request.user.is_staff
+        or request.user.is_superuser
+    )
+
+    if not (is_sender or is_recipient or is_admin_or_staff):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'application/json' in request.headers.get('accept', ''):
+            return JsonResponse({'success': False, 'error': 'You do not have permission to modify this message.'}, status=403)
+        messages.error(request, 'You do not have permission to delete or unsend this message.')
+        return redirect('messages_page')
+
+    action = (request.POST.get('action') or '').strip().lower()
+    if not action:
+        action = 'unsend' if (is_sender or is_admin_or_staff) else 'delete_for_me'
+
+    target_contact_id = message_obj.recipient_id if is_sender else message_obj.sender_id
+
+    if action == 'unsend':
+        if not (is_sender or is_admin_or_staff):
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'application/json' in request.headers.get('accept', ''):
+                return JsonResponse({'success': False, 'error': 'Only the sender or admin can unsend a message for everyone.'}, status=403)
+            messages.error(request, 'Only the sender can unsend this message.')
+            return redirect(f"/messages/?recipient={target_contact_id}")
+
+        message_obj.is_unsent = True
+        message_obj.save(update_fields=['is_unsent'])
+
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'application/json' in request.headers.get('accept', ''):
+            sender_name = message_obj.sender.get_full_name() or message_obj.sender.username
+            return JsonResponse({
+                'success': True,
+                'action': 'unsend',
+                'message_id': message_obj.id,
+                'is_sender': is_sender,
+                'unsent_label_self': 'You unsent a message',
+                'unsent_label_other': f"{sender_name} unsent a message",
+            })
+        messages.success(request, 'Message unsent.')
+        return redirect(f"/messages/?recipient={target_contact_id}")
+
+    elif action in {'delete_for_me', 'delete_me'}:
+        if is_sender:
+            message_obj.deleted_by_sender = True
+            message_obj.save(update_fields=['deleted_by_sender'])
+        elif is_recipient:
+            message_obj.deleted_by_recipient = True
+            message_obj.save(update_fields=['deleted_by_recipient'])
+        elif is_admin_or_staff:
+            message_obj.deleted_by_sender = True
+            message_obj.save(update_fields=['deleted_by_sender'])
+
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'application/json' in request.headers.get('accept', ''):
+            return JsonResponse({'success': True, 'action': 'delete_for_me', 'message_id': message_obj.id})
+        messages.success(request, 'Message removed for you.')
+        return redirect(f"/messages/?recipient={target_contact_id}")
+
+    elif action in {'delete_for_everyone', 'delete_everyone'}:
+        if not (is_sender or is_admin_or_staff):
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'application/json' in request.headers.get('accept', ''):
+                return JsonResponse({'success': False, 'error': 'Permission denied.'}, status=403)
+            messages.error(request, 'You cannot delete this message for everyone.')
+            return redirect(f"/messages/?recipient={target_contact_id}")
+
+        message_obj.deleted_by_sender = True
+        message_obj.deleted_by_recipient = True
+        message_obj.is_unsent = True
+        message_obj.save(update_fields=['deleted_by_sender', 'deleted_by_recipient', 'is_unsent'])
+
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'application/json' in request.headers.get('accept', ''):
+            return JsonResponse({'success': True, 'action': 'delete_for_everyone', 'message_id': message_obj.id})
+        messages.success(request, 'Message deleted for everyone.')
+        return redirect(f"/messages/?recipient={target_contact_id}")
+
+    else:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' or 'application/json' in request.headers.get('accept', ''):
+            return JsonResponse({'success': False, 'error': 'Invalid action specified.'}, status=400)
+        return redirect(f"/messages/?recipient={target_contact_id}")
 
 
 @login_required
