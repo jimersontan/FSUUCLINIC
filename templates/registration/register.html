@@ -5,6 +5,11 @@
 <div class="row justify-content-center py-5">
     <div class="col-lg-6">
         <div class="card p-4">
+            <div class="mb-3">
+                <a href="{% url 'landing_page' %}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-arrow-left" aria-hidden="true"></i> Back to home
+                </a>
+            </div>
             <h2 class="mb-3">Create your patient account</h2>
             <form method="post">
                 {% csrf_token %}
@@ -17,4 +22,32 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.querySelectorAll('#id_password1, #id_password2').forEach(function (passwordInput) {
+        const inputGroup = document.createElement('div');
+        inputGroup.className = 'input-group';
+        passwordInput.parentNode.insertBefore(inputGroup, passwordInput);
+        inputGroup.appendChild(passwordInput);
+
+        const toggleButton = document.createElement('button');
+        toggleButton.type = 'button';
+        toggleButton.className = 'btn btn-outline-secondary';
+        toggleButton.setAttribute('aria-label', 'Show password');
+        toggleButton.setAttribute('aria-pressed', 'false');
+        toggleButton.innerHTML = '<i class="bi bi-eye" aria-hidden="true"></i>';
+        toggleButton.addEventListener('click', function () {
+            const isPasswordVisible = passwordInput.type === 'text';
+            passwordInput.type = isPasswordVisible ? 'password' : 'text';
+            toggleButton.setAttribute('aria-label', isPasswordVisible ? 'Show password' : 'Hide password');
+            toggleButton.setAttribute('aria-pressed', String(!isPasswordVisible));
+            toggleButton.innerHTML = isPasswordVisible
+                ? '<i class="bi bi-eye" aria-hidden="true"></i>'
+                : '<i class="bi bi-eye-slash" aria-hidden="true"></i>';
+        });
+        inputGroup.appendChild(toggleButton);
+    });
+</script>
 {% endblock %}

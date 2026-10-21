@@ -377,113 +377,204 @@
         }
 
         .portal-flash-stack {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1080;
             display: grid;
-            gap: 0.55rem;
-            width: 100%;
-            margin: 0 0 0.85rem;
+            gap: 0.65rem;
+            width: min(26rem, calc(100vw - 2rem));
+            margin: 0;
+            pointer-events: none;
         }
 
         .portal-flash {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            width: min(100%, 760px);
+            gap: 0.85rem;
+            width: 100%;
             min-width: 0;
-            padding: 0.8rem 0.9rem 0.8rem 1rem;
-            border: 1px solid #a7f3d0;
-            border-left: 4px solid #10b981;
-            border-radius: 12px;
-            color: #065f46;
-            background: #ecfdf5;
-            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+            padding: 0.9rem 0.75rem 0.9rem 1rem;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 16px;
+            color: #1f2937;
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16), 0 2px 8px rgba(15, 23, 42, 0.06);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            pointer-events: auto;
+            animation: portalToastIn 0.28s ease-out both;
             transition: opacity 0.22s ease, transform 0.22s ease;
+        }
+
+        .portal-flash-icon {
+            display: grid;
+            width: 2.5rem;
+            height: 2.5rem;
+            flex: 0 0 2.5rem;
+            place-items: center;
+            border-radius: 50%;
+            color: #059669;
+            background: #d1fae5;
+            font-size: 1.2rem;
+        }
+
+        .portal-flash-content {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .portal-flash-title {
+            margin: 0;
+            color: #111827;
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .portal-flash-message {
+            margin: 0.15rem 0 0;
+            color: #64748b;
+            font-size: 0.84rem;
+            line-height: 1.4;
+            overflow-wrap: anywhere;
+        }
+
+        .portal-flash-subtext {
+            margin: 0.15rem 0 0;
+            color: #64748b;
+            font-size: 0.82rem;
+            line-height: 1.4;
         }
 
         .portal-flash[data-variant~="error"] {
             color: #991b1b;
-            background: #fef2f2;
-            border-color: #fecaca;
-            border-left-color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.22);
+        }
+
+        .portal-flash[data-variant~="error"] .portal-flash-icon {
+            color: #dc2626;
+            background: #fee2e2;
         }
 
         .portal-flash[data-variant~="warning"] {
             color: #92400e;
-            background: #fffbeb;
-            border-color: #fde68a;
-            border-left-color: #f59e0b;
+            border-color: rgba(245, 158, 11, 0.24);
+        }
+
+        .portal-flash[data-variant~="warning"] .portal-flash-icon {
+            color: #d97706;
+            background: #fef3c7;
         }
 
         .portal-flash[data-variant~="info"] {
             color: #1e40af;
-            background: #eff6ff;
-            border-color: #bfdbfe;
-            border-left-color: #3b82f6;
+            border-color: rgba(59, 130, 246, 0.22);
         }
 
-        .portal-flash-message {
-            flex: 1 1 auto;
-            min-width: 0;
-            margin: 0;
-            overflow-wrap: anywhere;
-            line-height: 1.45;
+        .portal-flash[data-variant~="info"] .portal-flash-icon {
+            color: #2563eb;
+            background: #dbeafe;
         }
 
         .portal-flash-close {
             display: grid;
-            width: 34px;
-            height: 34px;
-            flex: 0 0 34px;
+            width: 2rem;
+            height: 2rem;
+            flex: 0 0 2rem;
             place-items: center;
             border: 0;
-            border-radius: 8px;
-            color: currentColor;
+            border-radius: 50%;
+            color: #64748b;
             background: transparent;
-            opacity: 0.75;
+            transition: color 0.16s ease, background-color 0.16s ease;
         }
 
         .portal-flash-close:hover {
-            background: rgba(15, 23, 42, 0.08);
-            opacity: 1;
+            color: #1f2937;
+            background: #f1f5f9;
         }
 
         .portal-flash.is-dismissing {
             opacity: 0;
-            transform: translateY(-8px);
+            transform: translateX(12px);
             pointer-events: none;
         }
 
         body[data-theme="dark"] .portal-flash {
-            color: #ecfdf5;
-            background: #064e3b;
-            border-color: #047857;
-            border-left-color: #34d399;
+            color: #e5e7eb;
+            background: rgba(17, 24, 39, 0.96);
+            border-color: rgba(52, 211, 153, 0.25);
+        }
+
+        body[data-theme="dark"] .portal-flash-title {
+            color: #f9fafb;
+        }
+
+        body[data-theme="dark"] .portal-flash-message,
+        body[data-theme="dark"] .portal-flash-subtext {
+            color: #9ca3af;
+        }
+
+        body[data-theme="dark"] .portal-flash-icon {
+            color: #6ee7b7;
+            background: rgba(16, 185, 129, 0.18);
         }
 
         body[data-theme="dark"] .portal-flash[data-variant~="error"] {
-            color: #fff1f2;
-            background: #4c0519;
-            border-color: #9f1239;
-            border-left-color: #fb7185;
+            border-color: rgba(251, 113, 133, 0.28);
+        }
+
+        body[data-theme="dark"] .portal-flash[data-variant~="error"] .portal-flash-icon {
+            color: #fda4af;
+            background: rgba(225, 29, 72, 0.2);
         }
 
         body[data-theme="dark"] .portal-flash[data-variant~="warning"] {
-            color: #fffbeb;
-            background: #451a03;
-            border-color: #92400e;
-            border-left-color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.28);
+        }
+
+        body[data-theme="dark"] .portal-flash[data-variant~="warning"] .portal-flash-icon {
+            color: #fcd34d;
+            background: rgba(217, 119, 6, 0.2);
         }
 
         body[data-theme="dark"] .portal-flash[data-variant~="info"] {
-            color: #eff6ff;
-            background: #172554;
-            border-color: #1d4ed8;
-            border-left-color: #60a5fa;
+            border-color: rgba(96, 165, 250, 0.28);
+        }
+
+        body[data-theme="dark"] .portal-flash[data-variant~="info"] .portal-flash-icon {
+            color: #93c5fd;
+            background: rgba(37, 99, 235, 0.2);
+        }
+
+        body[data-theme="dark"] .portal-flash-close {
+            color: #9ca3af;
+        }
+
+        body[data-theme="dark"] .portal-flash-close:hover {
+            color: #f9fafb;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes portalToastIn {
+            from {
+                opacity: 0;
+                transform: translateX(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .portal-flash {
+            .portal-flash,
+            .portal-flash-close {
                 transition: none;
+            }
+            .portal-flash {
+                animation: none;
             }
         }
 
@@ -667,6 +758,61 @@
             color: var(--text);
             background: transparent;
             border-color: var(--border);
+        }
+
+        .portal-notification-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            padding: 0.8rem 1rem;
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border);
+            transition: background-color 0.16s ease;
+        }
+
+        .portal-notification-item:last-child {
+            border-bottom: 0;
+        }
+
+        .portal-notification-item:hover {
+            color: var(--text-strong);
+            background: var(--card-alt);
+        }
+
+        .portal-notification-icon {
+            display: grid;
+            width: 2rem;
+            height: 2rem;
+            flex: 0 0 2rem;
+            place-items: center;
+            border-radius: 50%;
+            color: #059669;
+            background: #d1fae5;
+        }
+
+        .portal-notification-item[data-variant="warning"] .portal-notification-icon {
+            color: #d97706;
+            background: #fef3c7;
+        }
+
+        .portal-notification-item[data-variant="danger"] .portal-notification-icon {
+            color: #dc2626;
+            background: #fee2e2;
+        }
+
+        .portal-notification-item-title {
+            margin: 0;
+            color: var(--text-strong);
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .portal-notification-item-description {
+            margin: 0.15rem 0 0;
+            color: var(--muted);
+            font-size: 0.76rem;
+            line-height: 1.4;
         }
 
         .portal-avatar-button {
@@ -999,6 +1145,7 @@
                     if (!badge && !messageBadge && !itemsEl) return;
                     try {
                         const response = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+                        if (!response.ok) throw new Error('Notification request failed: ' + response.status);
                         const data = await response.json();
                         const count = Number(data.count || 0);
                         if (badge) {
@@ -1018,13 +1165,31 @@
                         }
 
                         const notifications = data.items || [];
-                        itemsEl.innerHTML = notifications.map((item) => `
-                            <a class="list-group-item list-group-item-action px-3 py-2" href="${item.url}">
-                                <div class="fw-semibold text-dark">${item.subject}</div>
-                                <div class="small text-muted">From ${item.sender}</div>
-                                <div class="small text-secondary">${item.body}</div>
-                            </a>
-                        `).join('');
+                        itemsEl.replaceChildren();
+                        notifications.forEach(function (item) {
+                            const link = document.createElement('a');
+                            link.className = 'portal-notification-item';
+                            link.href = item.url;
+                            link.dataset.variant = item.variant;
+
+                            const icon = document.createElement('span');
+                            icon.className = 'portal-notification-icon';
+                            icon.setAttribute('aria-hidden', 'true');
+                            const iconElement = document.createElement('i');
+                            iconElement.className = 'bi ' + item.icon;
+                            icon.appendChild(iconElement);
+
+                            const content = document.createElement('span');
+                            const title = document.createElement('span');
+                            title.className = 'portal-notification-item-title d-block';
+                            title.textContent = item.title;
+                            const description = document.createElement('span');
+                            description.className = 'portal-notification-item-description d-block';
+                            description.textContent = item.description;
+                            content.append(title, description);
+                            link.append(icon, content);
+                            itemsEl.appendChild(link);
+                        });
                     } catch (error) {
                         console.warn('Notification polling failed:', error);
                     }

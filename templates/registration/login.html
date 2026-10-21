@@ -3,6 +3,10 @@
 {% block content %}
 <div class="row justify-content-center align-items-center py-5">
     <div class="col-12 col-md-7 col-lg-5">
+        <a href="{% url 'landing_page' %}" class="d-inline-flex align-items-center gap-2 mb-3 text-decoration-none text-muted fw-semibold small">
+            <i class="bi bi-arrow-left" aria-hidden="true"></i>
+            <span>Back to home</span>
+        </a>
         <div class="card login-card border-0">
             <div class="card-body p-4 p-md-5">
                 <div class="text-center mb-4">
@@ -15,6 +19,7 @@
 
                 <form method="post" novalidate>
                     {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ next_url }}">
 
                     {% if form.non_field_errors %}
                         <div class="alert alert-danger rounded-3 small mb-3">

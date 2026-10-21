@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
+{% block page_container_class %}container-fluid p-0{% endblock %}
 
 {% block content %}
-{% include 'partials/portal_header.html' %}
 <style>
   .appointments-page {
     --appointments-panel: #ffffff;
@@ -203,6 +203,10 @@
     body[data-theme="dark"] .consultation-detail-modal .text-muted { color: var(--appointments-muted) !important; }
 </style>
 
+<div class="patient-portal-shell">
+  {% include 'partials/patient_portal_sidebar.html' %}
+  <main class="patient-portal-content">
+  {% include 'partials/portal_header.html' %}
   <div class="appointments-page">
   <div class="modern-panel">
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -273,6 +277,8 @@
             </tbody>
         </table>
     </div>
+</div>
+  </main>
 </div>
 
 {% for appointment in all_appointments %}

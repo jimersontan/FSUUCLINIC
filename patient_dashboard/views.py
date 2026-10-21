@@ -245,8 +245,8 @@ def book_appointment(request):
                 body=f'{request.user.get_full_name() or request.user.username} booked {doctor.name} on {target_date:%b %d, %Y} at {target_time:%I:%M %p}.',
             )
 
-    messages.success(request, 'Appointment booked successfully.')
-    return redirect('my_appointments')
+    messages.success(request, 'Booking Confirmed', extra_tags='booking-confirmed')
+    return redirect('patient_dashboard')
 
 
 @patient_required

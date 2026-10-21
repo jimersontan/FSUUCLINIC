@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block page_container_class %}container-fluid p-0{% endblock %}
-{% block flash_messages %}{% endblock %}
 
 {% block content %}
 <style>
@@ -874,6 +873,19 @@
     }
     .booking-doctor-avatar { position: relative; flex: 0 0 56px; overflow: hidden; }
     .booking-doctor-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    #detailDoctorAvatar {
+        position: relative;
+        flex: 0 0 64px;
+        overflow: hidden;
+    }
+    #detailDoctorAvatar img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        object-fit: cover;
+    }
     .empty-state-card {
         background: #f8fafc;
         border: 1px dashed rgba(148, 163, 184, 0.5);
@@ -1277,7 +1289,15 @@
                                     <input type="file" name="photo" accept="image/*" class="form-control" aria-label="Upload profile photo">
                                 </div>
                             </div>
-                            {{ profile_form.as_p }}
+                            {% for field in profile_form %}
+                                {% if field.name != 'photo' %}
+                                    <p>
+                                        {{ field.label_tag }}
+                                        {{ field }}
+                                        {{ field.errors }}
+                                    </p>
+                                {% endif %}
+                            {% endfor %}
                             <button type="submit" class="btn btn-primary">Save profile</button>
                         </form>
                     </div>
@@ -1527,7 +1547,16 @@
             activeDoctorId = doctorId;
             detailDoctorName.textContent = doctorName;
             detailDoctorSpecialty.textContent = doctorSpecialty;
-            detailDoctorAvatar.textContent = doctorName.charAt(0).toUpperCase();
+            const fallback = document.createElement('span');
+            fallback.textContent = doctorName.charAt(0).toUpperCase();
+            detailDoctorAvatar.replaceChildren(fallback);
+            if (doctorPhoto) {
+                const image = document.createElement('img');
+                image.src = doctorPhoto;
+                image.alt = doctorName;
+                image.onerror = function () { image.remove(); };
+                detailDoctorAvatar.appendChild(image);
+            }
             detailDoctorBio.textContent = doctorBio || 'Experienced specialist devoted to patient care.';
             detailDoctorSex.textContent = doctorSex || 'Not specified';
             detailBookButton.onclick = function () {

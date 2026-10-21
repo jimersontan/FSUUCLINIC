@@ -58,6 +58,10 @@ class PatientDashboardLayoutTests(TestCase):
         self.assertContains(response, 'Upcoming appointment')
         self.assertContains(response, 'Find a Doctor')
         self.assertContains(response, 'My Appointments')
+        self.assertContains(response, 'id="detailDoctorAvatar"')
+        self.assertContains(response, 'image.alt = doctorName;')
+        self.assertContains(response, 'aria-label="Upload profile photo"')
+        self.assertNotContains(response, '<label for="id_photo">Photo:</label>')
         self.assertContains(response, 'grid-template-columns: 260px minmax(0, 1fr);')
         self.assertNotContains(response, 'margin-left: calc(50% - 50vw)')
         self.assertContains(response, '.patient-main > .tab-content')
@@ -78,6 +82,49 @@ class PatientDashboardLayoutTests(TestCase):
         self.assertContains(response, 'Profile photo')
         self.assertContains(response, 'body[data-theme="dark"] .profile-field label')
         self.assertContains(response, 'body[data-theme="dark"] .profile-upload')
+
+    def test_reschedule_page_uses_blurred_modal_card(self):
+        patient = User.objects.create_user(
+            username='patient_reschedule_ui',
+            email='patient_reschedule_ui@example.com',
+            password='StrongPass123',
+            role='PATIENT',
+        )
+        doctor = Doctor.objects.create(name='Dr. Reschedule UI', specialty='Family Medicine')
+        appointment = Appointment.objects.create(
+            patient=patient,
+            doctor=doctor,
+            date=date.today() + timedelta(days=4),
+            time=time(9, 0),
+        )
+        self.client.force_login(patient)
+
+        response = self.client.get(reverse('reschedule_appointment', args=[appointment.id]))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'class="reschedule-overlay"')
+        self.assertContains(response, 'backdrop-filter: blur(10px)')
+        self.assertContains(response, 'aria-modal="true"')
+        self.assertContains(response, 'class="patient-portal-sidebar"')
+        self.assertContains(response, 'aria-label="Patient navigation"')
+        self.assertContains(response, 'class="portal-header"')
+        self.assertContains(response, 'inset: 78px 0 0 260px;')
+
+    def test_patient_appointments_page_keeps_patient_navigation(self):
+        patient = User.objects.create_user(
+            username='patient_appointments_ui',
+            email='patient_appointments_ui@example.com',
+            password='StrongPass123',
+            role='PATIENT',
+        )
+        self.client.force_login(patient)
+
+        response = self.client.get(reverse('my_appointments'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'class="patient-portal-sidebar"')
+        self.assertContains(response, 'aria-label="Patient navigation"')
+        self.assertContains(response, 'class="portal-header"')
 
     def test_patient_can_book_an_available_slot(self):
         patient = User.objects.create_user(
@@ -112,6 +159,12 @@ class PatientDashboardLayoutTests(TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'patient_dashboard/dashboard.html')
+        self.assertContains(response, 'Booking Confirmed')
+        self.assertContains(response, 'Your reservation has been saved.')
+        self.assertContains(response, 'bi-check-lg')
+        self.assertContains(response, 'Find a Doctor')
+        self.assertContains(response, 'My Appointments')
         appointment = Appointment.objects.get(patient=patient, doctor=doctor, date=appointment_date)
         self.assertEqual(appointment.status, Appointment.Status.PENDING)
         self.assertEqual(appointment.notes, 'Other: Medical Certificate: Need a consultation')

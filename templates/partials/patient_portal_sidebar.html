@@ -1,0 +1,214 @@
+{% load static %}
+<style>
+    .patient-portal-shell {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        min-height: 100vh;
+        background: var(--bg);
+    }
+    .patient-portal-sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 40;
+        display: flex;
+        width: 260px;
+        height: 100vh;
+        flex-direction: column;
+        padding: 1.5rem 1rem 1rem;
+        overflow-y: auto;
+        color: var(--portal-sidebar-text);
+        background: linear-gradient(180deg, var(--portal-sidebar-top) 0%, var(--portal-sidebar-bottom) 100%);
+        border-right: 1px solid var(--portal-sidebar-border);
+        transition: width 0.2s ease, padding 0.2s ease;
+    }
+    .patient-portal-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        margin-bottom: 0.8rem;
+        padding: 0 0 0.8rem;
+        border-bottom: 1px solid var(--portal-sidebar-border);
+        font-size: 1.35rem;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        white-space: nowrap;
+    }
+    .patient-portal-brand img {
+        width: 44px;
+        height: 44px;
+        flex: 0 0 44px;
+        object-fit: contain;
+    }
+    .patient-portal-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        margin-top: 0.5rem;
+    }
+    .patient-portal-nav a {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.7rem 0.8rem;
+        overflow: hidden;
+        border-radius: 10px;
+        color: var(--portal-sidebar-text);
+        font-size: 0.96rem;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+    .patient-portal-nav a:hover,
+    .patient-portal-nav a.active {
+        color: var(--portal-sidebar-active-text);
+        background: var(--portal-sidebar-active-bg);
+    }
+    .patient-portal-nav i {
+        width: 1rem;
+        flex: 0 0 1rem;
+        text-align: center;
+    }
+    .patient-portal-collapse {
+        margin-top: auto;
+        padding: 0 0 0.75rem;
+        border-bottom: 1px solid var(--portal-sidebar-border);
+    }
+    .patient-portal-user {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-width: 0;
+        color: var(--portal-sidebar-text);
+    }
+    .patient-portal-user img,
+    .patient-portal-user-fallback {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        flex: 0 0 36px;
+        place-items: center;
+        border-radius: 50%;
+        object-fit: cover;
+        color: var(--accent-strong);
+        background: #dbeafe;
+        font-weight: 800;
+    }
+    .patient-portal-user strong,
+    .patient-portal-user small {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .patient-portal-user small { color: var(--muted); }
+    .patient-portal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+    }
+    .patient-portal-content {
+        grid-column: 2;
+        min-width: 0;
+        min-height: 100vh;
+        padding: 0 1.15rem 1.5rem;
+    }
+    .patient-portal-content > .portal-header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+    }
+    .patient-portal-shell.sidebar-collapsed {
+        grid-template-columns: 76px minmax(0, 1fr);
+    }
+    .patient-portal-shell.sidebar-collapsed .patient-portal-sidebar {
+        width: 76px;
+        padding-right: 0.55rem;
+        padding-left: 0.55rem;
+    }
+    .patient-portal-shell.sidebar-collapsed .patient-portal-brand,
+    .patient-portal-shell.sidebar-collapsed .patient-portal-collapse,
+    .patient-portal-shell.sidebar-collapsed .patient-portal-nav a {
+        justify-content: center;
+    }
+    .patient-portal-shell.sidebar-collapsed .patient-portal-brand span,
+    .patient-portal-shell.sidebar-collapsed .patient-portal-nav a span,
+    .patient-portal-shell.sidebar-collapsed .patient-portal-user > div,
+    .patient-portal-shell.sidebar-collapsed .patient-portal-footer [data-theme-toggle] {
+        display: none;
+    }
+    .patient-portal-shell.sidebar-collapsed .patient-portal-nav a { padding-inline: 0.55rem; }
+    .patient-portal-shell.sidebar-collapsed .patient-portal-nav i { margin: 0 !important; }
+    @media (max-width: 991px) {
+        .patient-portal-shell { grid-template-columns: minmax(0, 1fr); }
+        .patient-portal-sidebar {
+            position: static;
+            width: 100%;
+            height: auto;
+            min-height: 0;
+            padding: 0.75rem 1rem;
+        }
+        .patient-portal-brand,
+        .patient-portal-collapse,
+        .patient-portal-user,
+        .patient-portal-footer { display: none; }
+        .patient-portal-nav {
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin: 0;
+        }
+        .patient-portal-nav a { padding: 0.55rem 0.7rem; }
+        .patient-portal-content {
+            grid-column: 1;
+            min-height: calc(100vh - 4rem);
+            padding-inline: 1rem;
+        }
+        .patient-portal-shell.sidebar-collapsed .patient-portal-sidebar {
+            flex-direction: row;
+            align-items: center;
+            padding: 0.4rem 0.7rem;
+        }
+        .patient-portal-shell.sidebar-collapsed .patient-portal-nav { display: none; }
+        .patient-portal-shell.sidebar-collapsed .patient-portal-collapse { display: block; margin: 0 0 0 auto; padding: 0; border: 0; }
+    }
+</style>
+<aside class="patient-portal-sidebar">
+    <div class="patient-portal-brand">
+        <img src="{% get_static_prefix %}images/urios-crest.png" alt="Father Saturnino Urios University crest">
+        <span>FSUU Clinic</span>
+    </div>
+    <nav class="patient-portal-nav" aria-label="Patient navigation">
+        <a href="{% url 'patient_dashboard' %}" {% if request.resolver_match.url_name == 'patient_dashboard' %}class="active" aria-current="page"{% endif %}>
+            <i class="bi bi-house-door" aria-hidden="true"></i><span>Dashboard Home</span>
+        </a>
+        <a href="{% url 'patient_dashboard' %}">
+            <i class="bi bi-search" aria-hidden="true"></i><span>Find a Doctor</span>
+        </a>
+        <a href="{% url 'my_appointments' %}" {% if request.resolver_match.url_name == 'my_appointments' or request.resolver_match.url_name == 'reschedule_appointment' %}class="active" aria-current="page"{% endif %}>
+            <i class="bi bi-calendar-event" aria-hidden="true"></i><span>My Appointments</span>
+        </a>
+        <a href="{% url 'profile_update' %}" {% if request.resolver_match.url_name == 'profile_update' %}class="active" aria-current="page"{% endif %}>
+            <i class="bi bi-person" aria-hidden="true"></i><span>My Profile</span>
+        </a>
+    </nav>
+    <div class="patient-portal-collapse">
+        <button class="portal-sidebar-toggle" type="button" data-sidebar-toggle aria-label="Collapse navigation" title="Collapse navigation" aria-expanded="true">
+            <i class="bi bi-layout-sidebar-inset" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div class="patient-portal-footer">
+        <div class="patient-portal-user">
+            {% if request.user.photo %}
+            <img src="{{ request.user.photo.url }}" alt="{{ request.user.get_full_name|default:request.user.username }}">
+            {% else %}
+            <span class="patient-portal-user-fallback">{{ request.user.first_name|default:request.user.username|slice:':1'|upper }}</span>
+            {% endif %}
+            <div><strong>{{ request.user.first_name|default:request.user.username }}</strong><small>Patient</small></div>
+        </div>
+        <button class="btn btn-sm btn-outline-light" type="button" data-theme-toggle title="Toggle light/dark mode" aria-label="Toggle light/dark mode">
+            <i class="bi bi-moon-stars" aria-hidden="true"></i>
+        </button>
+    </div>
+</aside>

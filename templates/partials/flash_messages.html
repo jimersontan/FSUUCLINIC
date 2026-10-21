@@ -2,7 +2,23 @@
 <div class="portal-flash-stack">
     {% for message in messages %}
     <div class="portal-flash" data-flash-alert data-variant="{{ message.tags|default:'success' }}" role="alert">
-        <p class="portal-flash-message">{{ message }}</p>
+        <span class="portal-flash-icon" aria-hidden="true">
+            {% if 'error' in message.tags %}
+                <i class="bi bi-exclamation-lg"></i>
+            {% elif 'warning' in message.tags %}
+                <i class="bi bi-exclamation-triangle"></i>
+            {% elif 'info' in message.tags %}
+                <i class="bi bi-info-lg"></i>
+            {% else %}
+                <i class="bi bi-check-lg"></i>
+            {% endif %}
+        </span>
+        <div class="portal-flash-content">
+            <p class="portal-flash-title">{{ message }}</p>
+            {% if 'booking-confirmed' in message.tags %}
+            <p class="portal-flash-subtext">Your reservation has been saved.</p>
+            {% endif %}
+        </div>
         <button class="portal-flash-close" type="button" data-flash-dismiss aria-label="Dismiss notification" title="Dismiss notification">
             <i class="bi bi-x-lg" aria-hidden="true"></i>
         </button>

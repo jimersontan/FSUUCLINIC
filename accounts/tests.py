@@ -2,7 +2,9 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
 
+from accounts.forms import RegisterForm
 from accounts.models import Message, User
+from admin_dashboard.models import Appointment, Doctor, InventoryItem
 
 
 class RoleLoginRedirectTests(TestCase):
@@ -10,6 +12,53 @@ class RoleLoginRedirectTests(TestCase):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'landing.html')
+
+    def test_registration_page_has_home_button_and_password_visibility_toggles(self):
+        response = self.client.get(reverse('register'))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, f'href="{reverse("landing_page")}"')
+        self.assertContains(response, "querySelectorAll('#id_password1, #id_password2')")
+        self.assertContains(response, "toggleButton.setAttribute('aria-label'", count=2)
+        self.assertNotContains(response, 'id="id_username"')
+        self.assertContains(response, 'id="id_email"')
+
+    def test_registration_uses_email_as_username(self):
+        email = 'newpatient@example.com'
+
+        response = self.client.post(
+            reverse('register'),
+            {
+                'email': email,
+                'first_name': 'New',
+                'last_name': 'Patient',
+                'phone': '',
+                'password1': 'StrongPass123!',
+                'password2': 'StrongPass123!',
+            },
+        )
+
+        self.assertRedirects(response, reverse('patient_dashboard'), fetch_redirect_response=False)
+        user = User.objects.get(email=email)
+        self.assertEqual(user.username, email)
+
+    def test_registration_form_does_not_have_separate_username_field(self):
+        self.assertNotIn('username', RegisterForm().fields)
+
+    def test_registration_rejects_email_already_used_as_email_or_username(self):
+        User.objects.create_user(
+            username='existing_patient',
+            email='existing@example.com',
+            password='StrongPass123',
+        )
+        form = RegisterForm(data={
+            'email': 'EXISTING@example.com',
+            'password1': 'StrongPass123!',
+            'password2': 'StrongPass123!',
+        })
+
+        self.assertFalse(form.is_valid())
+        self.assertIn('email', form.errors)
 
     def test_default_admin_redirects_to_admin_dashboard(self):
         admin, _ = User.objects.get_or_create(
@@ -68,6 +117,42 @@ class RoleLoginRedirectTests(TestCase):
         response = self.client.get('/dashboard/')
         self.assertRedirects(response, '/login/?next=/dashboard/', fetch_redirect_response=False)
 
+    def test_patient_login_returns_to_safe_next_url(self):
+        User.objects.create_user(
+            username='next_patient',
+            email='next_patient@example.com',
+            password='StrongPass123',
+            role='PATIENT',
+        )
+
+        response = self.client.post(
+            reverse('login') + '?next=/dashboard/?doctor_name=Lee',
+            {'username': 'next_patient', 'password': 'StrongPass123', 'next': '/dashboard/?doctor_name=Lee'},
+        )
+
+        self.assertRedirects(response, '/dashboard/?doctor_name=Lee', fetch_redirect_response=False)
+
+    def test_patient_login_rejects_external_next_url(self):
+        User.objects.create_user(
+            username='external_next_patient',
+            email='external_next_patient@example.com',
+            password='StrongPass123',
+            role='PATIENT',
+        )
+
+        response = self.client.post(
+            reverse('login'),
+            {'username': 'external_next_patient', 'password': 'StrongPass123', 'next': 'https://example.com'},
+        )
+
+        self.assertRedirects(response, reverse('patient_dashboard'), fetch_redirect_response=False)
+
+    def test_landing_booking_button_uses_the_full_login_page(self):
+        response = self.client.get(reverse('landing_page'))
+
+        self.assertContains(response, 'href="/login/?next=/dashboard/"')
+        self.assertNotContains(response, 'id="authModal"')
+
     def test_login_page_has_clean_header_and_login_form_features(self):
         response = self.client.get(reverse('login'))
         self.assertEqual(response.status_code, 200)
@@ -104,7 +189,7 @@ class RoleLoginRedirectTests(TestCase):
         self.assertTrue(patient.received_messages.filter(sender=admin).exists())
         self.assertEqual(patient.received_messages.count(), 1)
 
-    def test_notification_payload_returns_unread_badge_counts(self):
+    def test_notification_payload_keeps_messages_out_of_important_notification_count(self):
         patient = User.objects.create_user(
             username='patient_badges',
             email='patient_badges@example.com',
@@ -125,9 +210,46 @@ class RoleLoginRedirectTests(TestCase):
         response = self.client.get(reverse('notification_payload'))
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['count'], 1)
+        self.assertEqual(response.json()['count'], 0)
         self.assertEqual(response.json()['message_count'], 1)
 
+    def test_notification_payload_includes_pending_bookings_and_low_stock(self):
+        patient = User.objects.create_user(
+            username='patient_notification',
+            email='patient_notification@example.com',
+            password='StrongPass123',
+            role='PATIENT',
+        )
+        admin = User.objects.create_user(
+            username='admin_notification',
+            email='admin_notification@example.com',
+            password='StrongPass123',
+            role='ADMIN',
+            is_staff=True,
+            is_superuser=True,
+        )
+        doctor = Doctor.objects.create(name='Dr. Notification', specialty='Family Medicine')
+        Appointment.objects.create(
+            patient=patient,
+            doctor=doctor,
+            date='2026-10-22',
+            time='09:00',
+            status=Appointment.Status.PENDING,
+        )
+        InventoryItem.objects.create(name='Test supply', quantity=5)
+        InventoryItem.objects.create(name='Out-of-stock supply', quantity=0)
+        Message.objects.create(sender=patient, recipient=admin, subject='Question', body='Not an alert')
+
+        self.client.force_login(admin)
+        response = self.client.get(reverse('notification_payload'))
+        data = response.json()
+
+        self.assertEqual(data['count'], 3)
+        self.assertEqual(data['message_count'], 1)
+        self.assertEqual(
+            [item['title'] for item in data['items']],
+            ['New appointment booking', 'Out of stock', 'Low stock'],
+        )
     def test_messages_page_has_dashboard_sidebar_and_search_input(self):
         patient = User.objects.create_user(
             username='patient_msg_ui',

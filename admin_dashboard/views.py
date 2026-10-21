@@ -235,7 +235,7 @@ def staff_dashboard(request):
     today = timezone.now().date()
     today_appointments = Appointment.objects.filter(date=today).select_related('patient', 'doctor')
     checked_in_count = today_appointments.filter(status=Appointment.Status.CHECKED_IN).count()
-    low_stock_items = InventoryItem.objects.filter(quantity__lt=10).order_by('quantity')
+    low_stock_items = InventoryItem.objects.filter(quantity__lte=10).order_by('quantity')
     unread_messages = 0
 
     medication_items = InventoryItem.objects.filter(category=InventoryItem.Category.MEDICATION).order_by('name')
@@ -257,7 +257,7 @@ def staff_dashboard(request):
 @staff_or_admin_required
 def inventory_view(request):
     items = InventoryItem.objects.all().order_by('name')
-    low_stock_items = items.filter(quantity__lt=10)
+    low_stock_items = items.filter(quantity__lte=10)
     out_of_stock_count = items.filter(quantity=0).count()
 
     if request.method == 'POST':

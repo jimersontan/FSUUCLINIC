@@ -6,9 +6,11 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
 
-from admin_dashboard.models import Appointment, Doctor
+from admin_dashboard.models import Appointment, Doctor, InventoryItem
 
 from .forms import LoginForm, RegisterForm
 from .models import Message, User, UserRole
@@ -76,9 +78,19 @@ def login_view(request):
             return redirect('staff_dashboard')
         if request.user.role == UserRole.ADMIN:
             return redirect('admin_dashboard')
+        next_url = request.POST.get('next') or request.GET.get('next')
+        if next_url and url_has_allowed_host_and_scheme(
+            next_url,
+            allowed_hosts={request.get_host()},
+            require_https=request.is_secure(),
+        ):
+            return redirect(next_url)
         return redirect('patient_dashboard')
 
-    return render(request, 'registration/login.html', {'form': form})
+    return render(request, 'registration/login.html', {
+        'form': form,
+        'next_url': request.POST.get('next') or request.GET.get('next', ''),
+    })
 
 
 def logout_view(request):
@@ -192,18 +204,54 @@ def notification_payload(request):
         deleted_by_recipient=False,
     )
     unread_count = unread_messages.count()
-    notifications = unread_messages.select_related('sender').order_by('-created_at')[:5]
-    items = [
-        {
-            'id': item.id,
-            'sender': item.sender.get_full_name() or item.sender.username,
-            'subject': item.subject or 'New message',
-            'body': item.body[:80],
-            'url': '/dashboard/appointments/' if item.appointment_id and request.user.role == UserRole.PATIENT else f"/messages/?recipient={item.sender.id}",
-        }
-        for item in notifications
-    ]
-    return JsonResponse({'count': unread_count, 'message_count': unread_count, 'items': items})
+    items = []
+    notification_count = 0
+
+    if request.user.role in {UserRole.ADMIN, UserRole.STAFF}:
+        pending_appointments = Appointment.objects.filter(
+            status=Appointment.Status.PENDING,
+            is_archived=False,
+        ).select_related('patient', 'doctor').order_by('-created_at')
+        low_stock_items = InventoryItem.objects.filter(quantity__lte=10).order_by('quantity', 'name')
+
+        pending_count = pending_appointments.count()
+        low_stock_count = low_stock_items.count()
+        notification_count = pending_count + low_stock_count
+
+        appointment_url = (
+            reverse('staff_dashboard')
+            if request.user.role == UserRole.STAFF
+            else f"{reverse('admin_dashboard')}?tab=appointments"
+        )
+        items.extend(
+            {
+                'title': 'New appointment booking',
+                'description': (
+                    f"{appointment.patient.get_full_name() or appointment.patient.username} "
+                    f"booked {appointment.doctor.name} for {appointment.date:%b %d, %Y}."
+                ),
+                'url': appointment_url,
+                'icon': 'bi-calendar-check',
+                'variant': 'success',
+            }
+            for appointment in pending_appointments[:5]
+        )
+        items.extend(
+            {
+                'title': 'Out of stock' if item.quantity == 0 else 'Low stock',
+                'description': f'{item.name}: {item.quantity} remaining.',
+                'url': reverse('inventory'),
+                'icon': 'bi-exclamation-octagon' if item.quantity == 0 else 'bi-exclamation-triangle',
+                'variant': 'danger' if item.quantity == 0 else 'warning',
+            }
+            for item in low_stock_items[:max(0, 5 - len(items))]
+        )
+
+    return JsonResponse({
+        'count': notification_count,
+        'message_count': unread_count,
+        'items': items,
+    })
 
 
 @login_required

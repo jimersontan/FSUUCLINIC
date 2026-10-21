@@ -143,7 +143,7 @@
                 <td>
                   {% if item.quantity <= 0 %}
                     <span class="stock-badge bg-stock-out">Out of Stock</span>
-                  {% elif item.quantity < 10 %}
+                  {% elif item.quantity <= 10 %}
                     <span class="stock-badge bg-stock-low">Low Stock</span>
                   {% else %}
                     <span class="stock-badge bg-stock-in">In Stock</span>

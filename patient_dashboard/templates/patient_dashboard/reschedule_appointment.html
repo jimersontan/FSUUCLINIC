@@ -1,24 +1,161 @@
 {% extends 'base.html' %}
+{% block page_container_class %}container-fluid p-0{% endblock %}
 
 {% block content %}
-{% include 'partials/portal_header.html' %}
-<div class="card p-4">
-    <h3>Reschedule appointment</h3>
-    <p><strong>Current slot:</strong> {{ appointment.doctor.name }} on {{ appointment.date }} at {{ appointment.time }}</p>
-    <form method="post">
-        {% csrf_token %}
-        <div class="row g-3">
-            <div class="col-md-4">
-                <label class="form-label">New date</label>
-                <input type="date" name="date" class="form-control" required value="{{ appointment.date|date:'Y-m-d' }}">
-            </div>
-            <div class="col-md-4">
-                <label class="form-label">New time</label>
-                <input type="time" name="time" class="form-control" required>
-            </div>
+<style>
+    .reschedule-overlay {
+        position: fixed;
+        inset: 78px 0 0 260px;
+        z-index: 20;
+        display: grid;
+        place-items: center;
+        padding: 1.25rem;
+        overflow-y: auto;
+        background: rgba(15, 23, 42, 0.38);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        animation: rescheduleBackdropIn 0.2s ease-out both;
+    }
+    .reschedule-card {
+        width: min(100%, 42rem);
+        padding: clamp(1.25rem, 4vw, 2rem);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 1.5rem;
+        color: #1e293b;
+        background: rgba(255, 255, 255, 0.97);
+        box-shadow: 0 28px 80px rgba(15, 23, 42, 0.24);
+        animation: rescheduleCardIn 0.24s ease-out both;
+    }
+    .reschedule-heading {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .reschedule-icon {
+        display: grid;
+        width: 3rem;
+        height: 3rem;
+        flex: 0 0 3rem;
+        place-items: center;
+        border-radius: 1rem;
+        color: #2563eb;
+        background: #eff6ff;
+        font-size: 1.3rem;
+    }
+    .reschedule-card h2 {
+        margin: 0;
+        color: #0f172a;
+        font-size: clamp(1.35rem, 3vw, 1.7rem);
+        font-weight: 750;
+        letter-spacing: -0.03em;
+    }
+    .reschedule-current-slot {
+        margin: 0.35rem 0 0;
+        color: #64748b;
+        line-height: 1.5;
+    }
+    .reschedule-card .form-label {
+        color: #334155;
+        font-size: 0.9rem;
+        font-weight: 650;
+    }
+    .reschedule-card .form-control {
+        min-height: 3rem;
+        border-color: #dbe3ef;
+        border-radius: 0.8rem;
+        box-shadow: none;
+    }
+    .reschedule-card .form-control:focus {
+        border-color: #93c5fd;
+        box-shadow: 0 0 0 0.22rem rgba(59, 130, 246, 0.14);
+    }
+    .reschedule-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.65rem;
+        margin-top: 1.5rem;
+    }
+    .reschedule-actions .btn {
+        min-height: 2.75rem;
+        padding-inline: 1.1rem;
+        border-radius: 0.8rem;
+        font-weight: 650;
+    }
+    body[data-theme="dark"] .reschedule-overlay {
+        background: rgba(2, 6, 23, 0.62);
+    }
+    body[data-theme="dark"] .reschedule-card {
+        color: #e2e8f0;
+        background: rgba(17, 24, 39, 0.97);
+        border-color: rgba(148, 163, 184, 0.2);
+    }
+    body[data-theme="dark"] .reschedule-card h2 { color: #f8fafc; }
+    body[data-theme="dark"] .reschedule-current-slot,
+    body[data-theme="dark"] .reschedule-card .form-label { color: #cbd5e1; }
+    body[data-theme="dark"] .reschedule-card .form-control {
+        color: #e2e8f0;
+        color-scheme: dark;
+        background: #0f172a;
+        border-color: #334155;
+    }
+    @keyframes rescheduleBackdropIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @keyframes rescheduleCardIn {
+        from { opacity: 0; transform: translateY(10px) scale(0.985); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .reschedule-overlay, .reschedule-card { animation: none; }
+    }
+</style>
+<div class="patient-portal-shell">
+    {% include 'partials/patient_portal_sidebar.html' %}
+    <main class="patient-portal-content">
+        {% include 'partials/portal_header.html' %}
+        <section class="reschedule-context card border-0 shadow-sm p-4" aria-labelledby="rescheduleContextTitle">
+            <h2 id="rescheduleContextTitle" class="h4">My appointments</h2>
+            <p class="mb-0 text-muted">Update the date and time for your visit with {{ appointment.doctor.name }}.</p>
+        </section>
+        <div class="reschedule-overlay">
+            <section class="reschedule-card" role="dialog" aria-modal="true" aria-labelledby="rescheduleTitle">
+                <div class="reschedule-heading">
+                    <div class="reschedule-icon" aria-hidden="true"><i class="bi bi-calendar2-week"></i></div>
+                    <div>
+                        <h2 id="rescheduleTitle">Reschedule appointment</h2>
+                        <p class="reschedule-current-slot"><strong>Current slot:</strong> {{ appointment.doctor.name }} on {{ appointment.date }} at {{ appointment.time }}</p>
+                    </div>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" for="rescheduleDate">New date</label>
+                            <input id="rescheduleDate" type="date" name="date" class="form-control" required value="{{ appointment.date|date:'Y-m-d' }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="rescheduleTime">New time</label>
+                            <input id="rescheduleTime" type="time" name="time" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="reschedule-actions">
+                        <a href="{% url 'my_appointments' %}" class="btn btn-outline-secondary">Back</a>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-calendar-check me-1" aria-hidden="true"></i>Reschedule</button>
+                    </div>
+                </form>
+            </section>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Reschedule</button>
-        <a href="{% url 'my_appointments' %}" class="btn btn-outline-secondary mt-3">Back</a>
-    </form>
+    </main>
 </div>
+<style>
+    @media (max-width: 991px) {
+        .reschedule-overlay { inset: 130px 0 0; }
+    }
+    @media (max-width: 575px) {
+        .reschedule-overlay { inset: 145px 0 0; padding: 0.75rem; }
+        .reschedule-actions { flex-wrap: wrap; }
+    }
+</style>
 {% endblock %}

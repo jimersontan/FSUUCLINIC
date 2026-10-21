@@ -1,0 +1,385 @@
+
+
+Father Saturnino Urios University
+College of Information Technology
+Butuan City
+[SYSTEM TITLE]
+[One-line description of what the web app does]
+A Final Project Documentation
+Presented to [Instructor Name]
+In Partial Fulfillment of the Requirements in
+SIA 2 – Systems Integration and Architecture 2
+Submitted by:
+[Group Name / Group No.]
+[Member 1 – Surname, First Name M.I.]
+[Member 2 – Surname, First Name M.I.]
+[Member 3 – Surname, First Name M.I.]
+[Member 4 – Surname, First Name M.I.]
+[Program, Year & Section]  •  [Semester], AY [____–____]
+[Date of Submission]
+Table of Contents
+TOC \h \o "1-2"
+Abstract
+ PAGEREF _Toc243415454 \h 
+4
+1. Introduction
+ PAGEREF _Toc243415455 \h 
+5
+1.1 Background of the Study
+ PAGEREF _Toc243415456 \h 
+5
+1.2 Statement of the Problem
+ PAGEREF _Toc243415457 \h 
+5
+1.3 Objectives of the Study
+ PAGEREF _Toc243415458 \h 
+5
+1.4 Scope and Limitations
+ PAGEREF _Toc243415459 \h 
+5
+1.5 Significance of the Study
+ PAGEREF _Toc243415460 \h 
+5
+2. System Overview
+ PAGEREF _Toc243415461 \h 
+6
+2.1 System Description
+ PAGEREF _Toc243415462 \h 
+6
+2.2 Users and Roles
+ PAGEREF _Toc243415463 \h 
+6
+2.3 Features and Modules
+ PAGEREF _Toc243415464 \h 
+6
+2.4 Technology Stack
+ PAGEREF _Toc243415465 \h 
+6
+3. System Architecture and Integration
+ PAGEREF _Toc243415466 \h 
+7
+3.1 System Architecture Diagram
+ PAGEREF _Toc243415467 \h 
+7
+3.2 Integration Approach
+ PAGEREF _Toc243415468 \h 
+7
+3.3 External APIs and Services Used
+ PAGEREF _Toc243415469 \h 
+7
+3.4 Data Flow
+ PAGEREF _Toc243415470 \h 
+7
+4. Database Design
+ PAGEREF _Toc243415471 \h 
+8
+4.1 Entity Relationship Diagram (ERD)
+ PAGEREF _Toc243415472 \h 
+8
+4.2 Data Dictionary
+ PAGEREF _Toc243415473 \h 
+8
+5. API Documentation
+ PAGEREF _Toc243415474 \h 
+9
+5.1 Base URL and Conventions
+ PAGEREF _Toc243415475 \h 
+9
+5.2 Endpoint Summary
+ PAGEREF _Toc243415476 \h 
+9
+5.3 Endpoint Details
+ PAGEREF _Toc243415477 \h 
+9
+6. Security Measures
+ PAGEREF _Toc243415478 \h 
+10
+7. User Interface and User Manual
+ PAGEREF _Toc243415479 \h 
+11
+7.1 [Screen Name, e.g., Login Page]
+ PAGEREF _Toc243415480 \h 
+11
+7.2 [Screen Name]
+ PAGEREF _Toc243415481 \h 
+11
+8. Testing
+ PAGEREF _Toc243415482 \h 
+12
+8.1 Testing Approach
+ PAGEREF _Toc243415483 \h 
+12
+8.2 Test Cases and Results
+ PAGEREF _Toc243415484 \h 
+12
+8.3 Known Issues and Fixes
+ PAGEREF _Toc243415485 \h 
+12
+9. Deployment and Installation Guide
+ PAGEREF _Toc243415486 \h 
+13
+9.1 System Requirements
+ PAGEREF _Toc243415487 \h 
+13
+9.2 Installation Steps
+ PAGEREF _Toc243415488 \h 
+13
+9.3 Source Code Repository
+ PAGEREF _Toc243415489 \h 
+13
+10. Team Roles and Contributions
+ PAGEREF _Toc243415490 \h 
+14
+11. Conclusion and Recommendations
+ PAGEREF _Toc243415491 \h 
+15
+11.1 Conclusion
+ PAGEREF _Toc243415492 \h 
+15
+11.2 Recommendations
+ PAGEREF _Toc243415493 \h 
+15
+References
+ PAGEREF _Toc243415494 \h 
+16
+Appendices
+ PAGEREF _Toc243415495 \h 
+17
+How to use this template (delete this box before you submit)
+Replace everything highlighted in yellow or written in [brackets] with your own details.
+Gray italic text is guidance only. Read it, follow it, then delete it.
+Keep the section order. If a section does not apply to your system, keep the heading and write a short explanation why.
+After you finish, right-click the Table of Contents and choose Update Field → Update entire table.
+Use clear screenshots and diagrams, each with a caption (e.g., Figure 3. Login Page).
+Check the rubric (PDF) so you know exactly how the documentation will be scored.
+Submit as PDF unless your instructor says otherwise. File name: [GROUPNAME]_SIA2_Final_Documentation.pdf
+Abstract
+In one paragraph (150–250 words), summarize the whole project: the problem, what your web app does, the technologies and APIs you integrated, and the main result. Write this last.
+[Write your abstract here.]
+Keywords: [keyword 1], [keyword 2], [keyword 3], [keyword 4]
+1. Introduction
+1.1 Background of the Study
+Describe the organization, users, or situation your system is for. What is happening now, and why does it matter?
+[Write here.]
+1.2 Statement of the Problem
+State the specific problems your system solves. A short numbered list works well.
+[Write here.]
+1.3 Objectives of the Study
+Give one general objective, then specific objectives that are measurable (e.g., "To integrate a payment API that confirms transactions in real time").
+[General objective]
+[Specific objectives 1, 2, 3 …]
+1.4 Scope and Limitations
+Scope: what the system covers (modules, users, features). Limitations: what it does not cover and any known constraints (e.g., sandbox API only, no mobile app).
+[Write here.]
+1.5 Significance of the Study
+Who benefits from the system, and how? (e.g., end users, the organization, future developers).
+[Write here.]
+2. System Overview
+2.1 System Description
+Explain in plain language what the web app is and how a user typically uses it from start to finish.
+[Write here.]
+2.2 Users and Roles
+User Role
+Description
+What They Can Do
+[e.g., Admin]
+[Who this user is]
+[Main permissions / actions]
+[e.g., Customer]
+2.3 Features and Modules
+Module / Feature
+Description
+User Role(s)
+[e.g., User Authentication]
+[What it does]
+[Admin, Customer]
+2.4 Technology Stack
+Layer
+Technology / Tool
+Version
+Purpose
+Frontend
+[e.g., HTML/CSS/JS, React]
+[ ]
+[ ]
+Backend
+[e.g., Node.js + Express, PHP + Laravel]
+[ ]
+[ ]
+Database
+[e.g., MySQL, PostgreSQL]
+[ ]
+[ ]
+External APIs / Services
+[e.g., payment, maps, email, SMS]
+[ ]
+[ ]
+Tools
+[e.g., Git/GitHub, Postman, Docker]
+[ ]
+[ ]
+Hosting / Deployment
+[e.g., localhost, cloud host]
+[ ]
+[ ]
+3. System Architecture and Integration
+3.1 System Architecture Diagram
+Insert a diagram showing the main parts of your system (client, server, database, external APIs/services) and how they connect. Label each connection (e.g., REST/JSON over HTTPS).
+[Insert Figure 1. System Architecture Diagram]
+3.2 Integration Approach
+Explain how your system integrates with other systems or services. Name the integration style you used (e.g., REST API calls, webhooks, message queue, shared database) and why it fits your system.
+[Write here.]
+3.3 External APIs and Services Used
+API / Service
+Provider
+Purpose in the System
+Auth Method
+[e.g., Google Maps API]
+[ ]
+[ ]
+[API key / OAuth 2.0 / none]
+3.4 Data Flow
+Show how data moves through your system for at least one key process (e.g., placing an order). Use a data flow diagram, sequence diagram, or flowchart, then explain it in a short paragraph.
+[Insert Figure 2. Data Flow / Sequence Diagram]
+[Explanation]
+4. Database Design
+4.1 Entity Relationship Diagram (ERD)
+Insert your ERD showing entities, attributes, primary keys, foreign keys, and relationships with cardinality.
+[Insert Figure 3. Entity Relationship Diagram]
+4.2 Data Dictionary
+Create one table per database table. Copy this table as many times as needed.
+Table name: [table_name]
+Field Name
+Data Type
+Size
+Key / Constraint
+Description
+[id]
+[INT]
+[11]
+[PK, AUTO_INCREMENT]
+[Unique identifier]
+5. API Documentation
+Document every endpoint your system exposes or consumes. You may also attach or link your OpenAPI/Swagger specification or Postman collection in the Appendices.
+5.1 Base URL and Conventions
+[Base URL, e.g., http://localhost:3000/api/v1]
+[Data format (JSON), authentication header, error format]
+5.2 Endpoint Summary
+Method
+Endpoint
+Description
+Auth Required
+[GET]
+[/api/v1/products]
+[Returns all products]
+[Yes / No]
+[POST]
+[/api/v1/orders]
+[Creates a new order]
+5.3 Endpoint Details
+For each important endpoint, give the request parameters/body, a sample request, a sample response, and the possible status codes (e.g., 200, 201, 400, 401, 404, 500). Copy this block for each endpoint.
+Endpoint: [METHOD] [/path]
+[Request parameters / body]
+[Sample request]
+[Sample response (JSON)]
+[Status codes and meaning]
+6. Security Measures
+Explain how your system protects users and data. Cover what applies to your system, for example: authentication (login, sessions, JWT), authorization (roles and permissions), password hashing, input validation, protection against SQL injection and XSS, API key handling (never hard-coded in public repos), and HTTPS/TLS.
+Security Concern
+How Our System Handles It
+Authentication
+[ ]
+Authorization / Roles
+[ ]
+Password Storage
+[ ]
+Input Validation
+[ ]
+API Keys / Secrets
+[ ]
+Data in Transit
+[ ]
+7. User Interface and User Manual
+Walk the reader through the system screen by screen. For each screen, add a clear screenshot with a caption and short step-by-step instructions. Copy this block for each screen.
+7.1 [Screen Name, e.g., Login Page]
+[Insert Figure __. Screenshot]
+[Step-by-step instructions for the user]
+7.2 [Screen Name]
+[Insert Figure __. Screenshot]
+[Step-by-step instructions for the user]
+8. Testing
+8.1 Testing Approach
+Describe how you tested the system (e.g., functional testing of each module, API testing with Postman, integration testing between services, user acceptance testing).
+[Write here.]
+8.2 Test Cases and Results
+Test ID
+Test Scenario
+Steps / Input
+Expected Result
+Actual Result
+Status
+TC-01
+[e.g., Login with valid credentials]
+[ ]
+[ ]
+[ ]
+[Pass/Fail]
+TC-02
+[e.g., Login with wrong password]
+[ ]
+[ ]
+[ ]
+TC-03
+[e.g., API returns 404 for missing item]
+[ ]
+[ ]
+[ ]
+8.3 Known Issues and Fixes
+List any bugs you found, how you fixed them, and any issues that are still open.
+[Write here.]
+9. Deployment and Installation Guide
+Write instructions clear enough that another student could run your system on a fresh computer.
+9.1 System Requirements
+[Hardware and software requirements, e.g., Node.js version, XAMPP, browser]
+9.2 Installation Steps
+[Step 1: Clone the repository: git clone <repository URL>]
+[Step 2: Install dependencies]
+[Step 3: Set up the database and import the SQL file]
+[Step 4: Configure environment variables (.env) – do not include real keys]
+[Step 5: Run the system and open it in the browser]
+9.3 Source Code Repository
+[GitHub repository link]
+10. Team Roles and Contributions
+Be specific and honest. List what each member actually built, wrote, or tested.
+Member Name
+Role
+Specific Contributions
+[Member 1]
+[e.g., Project Lead / Backend Developer]
+[ ]
+[Member 2]
+[e.g., Frontend Developer]
+[ ]
+[Member 3]
+[e.g., Database Designer / Tester]
+[ ]
+[Member 4]
+[e.g., Documentation / API Integration]
+[ ]
+11. Conclusion and Recommendations
+11.1 Conclusion
+Go back to your objectives in Section 1.3. For each one, state whether and how the system met it.
+[Write here.]
+11.2 Recommendations
+Suggest realistic improvements or features for future versions of the system.
+[Write here.]
+References
+List all sources you used (documentation, articles, tutorials, libraries) in APA 7th edition format, arranged alphabetically. Include the official documentation of every API you integrated.
+[Author, A. A. (Year). Title of work. Publisher or Site Name. URL]
+Appendices
+Add supporting materials here. Label each one (Appendix A, B, C …).
+Appendix A – OpenAPI/Swagger specification or Postman collection
+Appendix B – Additional screenshots or diagrams
+Appendix C – Sample source code of key modules
+Appendix D – User acceptance or survey forms (if any)
+Appendix E – AI-use disclosure (if AI tools were used, state which tools and for what)
